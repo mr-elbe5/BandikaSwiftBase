@@ -10,8 +10,7 @@
 import Foundation
 
 public struct Paths{
-
-    public static let baseDirectory = FileManager.default.currentDirectoryPath
+    public static var baseDirectory = "."
     public static var dataDirectory = "."
     public static var fileDirectory = "."
     public static var tempFileDirectory = "."
@@ -24,15 +23,17 @@ public struct Paths{
     public static var staticsFile = "."
     public static var usersFile = "."
     public static var logFile = "."
-    
-    public static var resourceDirectory = baseDirectory
-    public static var webDirectory = resourceDirectory.appendPath("web")
-    public static var serverPagesDirectory = resourceDirectory.appendPath("serverPages")
-    public static var defaultContentDirectory = resourceDirectory.appendPath("defaultContent")
-    public static var defaultTemplateDirectory = resourceDirectory.appendPath("defaultTemplates")
-    public static var defaultLayoutDirectory = resourceDirectory.appendPath("defaultLayout")
 
-    public static func initPaths(){
+    public static var resourceDirectory = "."
+    public static var webDirectory = "."
+    public static var serverPagesDirectory = "."
+    public static var defaultContentDirectory = "."
+    public static var defaultTemplateDirectory = "."
+    public static var defaultLayoutDirectory = "."
+
+    public static func initPaths(baseDirectory: String, resourceDirectory: String){
+        Paths.baseDirectory = baseDirectory
+        Paths.resourceDirectory = resourceDirectory
         dataDirectory = baseDirectory.appendPath("BandikaData")
         fileDirectory = dataDirectory.appendPath("files")
         tempFileDirectory = fileDirectory.appendPath("tmp")
@@ -45,6 +46,11 @@ public struct Paths{
         staticsFile = dataDirectory.appendPath("statics.json")
         usersFile = dataDirectory.appendPath("users.json")
         logFile = baseDirectory.appendPath("bandika.log")
+        webDirectory = resourceDirectory.appendPath("web")
+        serverPagesDirectory = resourceDirectory.appendPath("serverPages")
+        defaultContentDirectory = resourceDirectory.appendPath("defaultContent")
+        defaultTemplateDirectory = resourceDirectory.appendPath("defaultTemplates")
+        defaultLayoutDirectory = resourceDirectory.appendPath("defaultLayout")
         assertDirectories()
         if !Files.fileExists(path: logFile){
             _ = Files.saveFile(text: "", path: logFile)
@@ -84,5 +90,5 @@ public struct Paths{
             Log.error("could not create all directories")
         }
     }
-    
+
 }
