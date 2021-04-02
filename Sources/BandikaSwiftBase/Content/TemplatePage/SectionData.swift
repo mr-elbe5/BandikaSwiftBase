@@ -39,7 +39,7 @@ public class SectionData : TypedData, Identifiable, Codable, Hashable{
         }
     }
     
-    init(){
+    public init(){
         name = ""
         contentId = 0
         cssClass = ""

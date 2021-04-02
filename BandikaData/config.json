@@ -1,0 +1,8 @@
+{
+  "webPort" : 8080,
+  "applicationName" : "SwiftyBandika",
+  "autostart" : false,
+  "host" : "localhost",
+  "changeDate" : "2021-04-01T18:44:54Z",
+  "version" : 1
+}

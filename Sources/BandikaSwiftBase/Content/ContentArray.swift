@@ -43,7 +43,7 @@ public class TypedContentItem: Codable{
     public var type : DataType
     public var data : ContentData
     
-    init(data: ContentData){
+    public init(data: ContentData){
         type = data.type
         self.data = data
     }

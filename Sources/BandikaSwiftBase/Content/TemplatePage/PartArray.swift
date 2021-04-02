@@ -43,7 +43,7 @@ public class TypedPartItem: Codable{
     public var type : DataType
     public var data : PartData
 
-    init(data: PartData){
+    public init(data: PartData){
         type = data.type
         self.data = data
     }

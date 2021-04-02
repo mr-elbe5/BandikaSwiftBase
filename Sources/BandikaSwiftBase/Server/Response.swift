@@ -27,23 +27,23 @@ public class Response {
         end()
     }
 
-    init(code: HTTPResponseStatus){
+    public init(code: HTTPResponseStatus){
         status = code
     }
 
-    init(html: String){
+    public init(html: String){
         status = .ok
         headers.replaceOrAdd(name: "Content-Type", value: "text/html")
         body = ByteBuffer(string: html)
     }
 
-    init(json: String){
+    public init(json: String){
         status = .ok
         headers.replaceOrAdd(name: "Content-Type", value: "application/json")
         body = ByteBuffer(string: json)
     }
 
-    init(data: Data, fileName: String, contentType: String, download: Bool = false){
+    public init(data: Data, fileName: String, contentType: String, download: Bool = false){
         status = .ok
         headers.replaceOrAdd(name: "Content-Type", value: contentType)
         let disposition = "\(download ? "attachment" : "inline"); filename=\"\(fileName.toSafeWebName())\""

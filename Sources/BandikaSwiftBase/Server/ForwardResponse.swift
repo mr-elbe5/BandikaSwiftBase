@@ -11,7 +11,7 @@ import Foundation
 
 public class ForwardResponse: Response{
 
-    init(page: String, request: Request){
+    public init(page: String, request: Request){
         if let html = ServerPageController.processPage(path: page, request: request) {
             super.init(html: html)
         }

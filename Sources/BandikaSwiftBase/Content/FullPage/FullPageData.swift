@@ -25,7 +25,7 @@ public class FullPageData: PageData {
         }
     }
 
-    override init() {
+    override public init() {
         cssClass = "paragraph"
         content = ""
         super.init()

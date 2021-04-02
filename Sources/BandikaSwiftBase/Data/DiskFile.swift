@@ -19,12 +19,12 @@ public class DiskFile{
         }
     }
 
-    init(){
+    public init(){
         name = ""
         live = false
     }
     
-    init(name: String, live: Bool){
+    public init(name: String, live: Bool){
         self.name = name
         self.live = live
     }

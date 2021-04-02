@@ -13,7 +13,7 @@ public class RegularAction : QueuedAction{
 
     public var nextExecution:  Date
 
-    override init(){
+    override public init(){
         nextExecution = Application.instance.currentTime
         super.init()
     }

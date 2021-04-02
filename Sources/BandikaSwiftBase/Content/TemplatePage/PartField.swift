@@ -36,7 +36,7 @@ public class PartField : TypedData, Codable{
         }
     }
     
-    init(){
+    public init(){
         partId = 0
         name = ""
         content = ""

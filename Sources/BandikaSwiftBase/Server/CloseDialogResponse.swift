@@ -11,7 +11,7 @@ import Foundation
 
 public class CloseDialogResponse: Response{
 
-    init(url: String, request: Request){
+    public init(url: String, request: Request){
         request.addPageVar("url", url)
         request.addPageVar("hasMessage", String(request.hasMessage))
         if request.hasMessage{

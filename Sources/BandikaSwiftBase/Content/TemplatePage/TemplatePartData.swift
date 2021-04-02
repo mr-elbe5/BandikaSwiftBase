@@ -31,7 +31,7 @@ public class TemplatePartData: PartData {
         }
     }
 
-    override init() {
+    override public init() {
         template = ""
         fields = Dictionary<String, PartField>()
         super.init()

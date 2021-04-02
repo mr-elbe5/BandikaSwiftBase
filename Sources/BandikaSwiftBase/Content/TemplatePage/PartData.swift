@@ -49,7 +49,7 @@ public class PartData: BaseData {
         }
     }
 
-    override init() {
+    override public init() {
         sectionName = ""
         position = 0
         super.init()

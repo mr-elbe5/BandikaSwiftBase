@@ -38,7 +38,7 @@ public struct Router {
             //Log.info("controller path: \(String(describing: pathSegments))")
             if pathSegments.count > 2 {
                 let controllerName = pathSegments[1]
-                if let controllerType = ControllerType.init(rawValue: controllerName) {
+                if let controllerType = ControllerType(rawValue: controllerName) {
                     if let controller = ControllerFactory.getController(type: controllerType) {
                         let method = pathSegments[2]
                         var id: Int? = nil

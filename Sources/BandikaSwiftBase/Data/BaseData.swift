@@ -39,7 +39,7 @@ public class BaseData: TypedData, Identifiable, Codable, Hashable{
         }
     }
     
-    init(){
+    public init(){
         isNew = false
         id = 0
         version = 1

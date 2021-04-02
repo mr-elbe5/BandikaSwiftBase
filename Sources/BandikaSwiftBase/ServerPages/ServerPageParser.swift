@@ -14,7 +14,7 @@ public class ServerPageParser {
     public var rootTag = ServerPageTag()
     public var stack = Array<ServerPageTag>()
 
-    init(){
+    public init(){
         stack.append(rootTag)
     }
 
@@ -134,7 +134,7 @@ public class ServerPageParser {
         var name : String
         var content = ""
 
-        init(_ start: String.Index, _ end: String.Index, content: String, isStartIndex: Bool, isSelfClosing : Bool = false){
+        public init(_ start: String.Index, _ end: String.Index, content: String, isStartIndex: Bool, isSelfClosing : Bool = false){
             self.start = start
             self.end = end
             self.isStartIndex = isStartIndex

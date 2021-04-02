@@ -17,7 +17,7 @@ final public class HTTPHandler : ChannelInboundHandler {
     let router : Router
     public var request = Request()
     
-    init(router: Router) {
+    public init(router: Router) {
         self.router = router
     }
     

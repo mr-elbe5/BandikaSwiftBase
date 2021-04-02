@@ -80,7 +80,7 @@ public class ContentData : BaseData{
         }
     }
 
-    override init(){
+    override public init(){
         name = ""
         displayName = ""
         description = ""

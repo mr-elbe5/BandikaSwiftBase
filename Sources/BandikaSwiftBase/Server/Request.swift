@@ -129,7 +129,7 @@ public class Request {
         }
     }
 
-    init(){
+    public init(){
     }
 
     public func setLanguage(){

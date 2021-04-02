@@ -16,7 +16,7 @@ public class Session {
     public var user: UserData? = nil
     public var attributes = Dictionary<String, Any>()
 
-    init() {
+    public init() {
         timestamp = Date()
         sessionId = generateID()
     }

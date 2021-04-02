@@ -20,7 +20,7 @@ public class MemoryFile{
     public var data : Data
     public var contentType : String
 
-    init(name: String, data: Data){
+    public init(name: String, data: Data){
         self.name = name
         self.data = data
         contentType = MimeType.from(name)

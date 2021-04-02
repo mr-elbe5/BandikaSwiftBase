@@ -37,7 +37,7 @@ public class GroupData: BaseData{
         }
     }
     
-    override init(){
+    override public init(){
         name = ""
         notes = ""
         systemRights = Array<SystemZone>()

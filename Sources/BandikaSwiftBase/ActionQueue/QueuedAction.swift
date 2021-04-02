@@ -26,6 +26,9 @@ public class QueuedAction: Identifiable, Equatable{
         }
     }
 
+    public init(){
+    }
+
     public func execute(){
     }
 

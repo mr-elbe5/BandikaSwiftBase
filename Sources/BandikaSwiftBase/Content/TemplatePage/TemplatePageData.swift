@@ -25,7 +25,7 @@ public class TemplatePageData : PageData{
         }
     }
 
-    override init(){
+    override public init(){
         template = ""
         sections = Dictionary<String, SectionData>()
         super.init()

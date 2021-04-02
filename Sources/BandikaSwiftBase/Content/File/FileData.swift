@@ -74,7 +74,7 @@ public class FileData: BaseData {
         }
     }
 
-    override init() {
+    override public init() {
         fileName = ""
         displayName = ""
         description = ""

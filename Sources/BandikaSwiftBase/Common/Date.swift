@@ -48,7 +48,7 @@ extension Date {
         Int64((timeIntervalSince1970 * 1000.0).rounded())
     }
 
-    init(milliseconds:Int) {
+    public init(milliseconds:Int) {
         self = Date(timeIntervalSince1970: TimeInterval(milliseconds / 1000))
     }
 }

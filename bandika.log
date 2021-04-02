@@ -1,0 +1,37 @@
+Info: 01.04.2021, 20:44 base directory is /Users/miro/Developer/_github/BandikaSwiftBase
+Info: 01.04.2021, 20:44 data directory is /Users/miro/Developer/_github/BandikaSwiftBase/BandikaData
+Info: 01.04.2021, 20:44 file directory is /Users/miro/Developer/_github/BandikaSwiftBase/BandikaData/files
+Info: 01.04.2021, 20:44 template directory is /Users/miro/Developer/_github/BandikaSwiftBase/BandikaData/templates
+Info: 01.04.2021, 20:44 layout directory is /Users/miro/Developer/_github/BandikaSwiftBase/BandikaData/layout
+Info: 01.04.2021, 20:44 resource directory is /Users/miro/Developer/_github/BandikaSwiftBase
+Info: 01.04.2021, 20:44 web directory is /Users/miro/Developer/_github/BandikaSwiftBase/web
+Info: 01.04.2021, 20:44 initializing languages
+Warn: 01.04.2021, 20:44 language bundle not found at /Users/miro/Developer/_github/BandikaSwiftBase/Sources/SwiftyBandikaCL/en.lproj
+Warn: 01.04.2021, 20:44 language bundle not found at /Users/miro/Developer/_github/BandikaSwiftBase/Sources/SwiftyBandikaCL/de.lproj
+Info: 01.04.2021, 20:44 initializing statics
+Info: 01.04.2021, 20:44 saving app statics
+Info: 01.04.2021, 20:44 created statics
+Info: 01.04.2021, 20:44 loaded app statics
+Info: 01.04.2021, 20:44 saving app statics
+Info: 01.04.2021, 20:44 initializing configuration
+Info: 01.04.2021, 20:44 saving configuration
+Info: 01.04.2021, 20:44 created default configuration
+Info: 01.04.2021, 20:44 loaded app configuration
+Info: 01.04.2021, 20:44 initializing users
+Info: 01.04.2021, 20:44 creating root user
+Info: 01.04.2021, 20:44 creating default groups
+Info: 01.04.2021, 20:44 saving user data
+Info: 01.04.2021, 20:44 created default user
+Info: 01.04.2021, 20:44 groups mapped to ids
+Info: 01.04.2021, 20:44 users mapped to ids
+Info: 01.04.2021, 20:44 loaded users
+Info: 01.04.2021, 20:44 initializing content
+Error:01.04.2021, 20:44 Error copying file content.json: The file “content.json” couldn’t be opened because there is no such file.
+Error:01.04.2021, 20:44 could not save default content
+Info: 01.04.2021, 20:44 created default templates
+Info: 01.04.2021, 20:44 loaded 0 part templates
+Info: 01.04.2021, 20:44 loaded 0 page templates
+Info: 01.04.2021, 20:44 loaded 0 master templates
+Warn: 01.04.2021, 20:44 default master not loaded
+Info: 01.04.2021, 20:44 Your shutdown link is 'http://localhost:8080/shutdown/ULObWYOQ7M8='
+Info: 01.04.2021, 20:44 Server has started as localhost on port 8080

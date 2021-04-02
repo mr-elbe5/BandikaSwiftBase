@@ -14,7 +14,7 @@ public class Message {
     public var type: MessageType
     public var text: String
 
-    init(type: MessageType, text: String){
+    public init(type: MessageType, text: String){
         self.type = type
         self.text = text
     }

@@ -60,7 +60,7 @@ public class UserData: BaseData {
         }
     }
 
-    override init() {
+    override public init() {
         title = ""
         firstName = ""
         lastName = ""

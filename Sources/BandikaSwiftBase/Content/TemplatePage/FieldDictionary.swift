@@ -47,7 +47,7 @@ public class TypedFieldItem: Codable{
     public var type : DataType
     public var data : PartField
 
-    init(data: PartField){
+    public init(data: PartField){
         type = data.type
         self.data = data
     }

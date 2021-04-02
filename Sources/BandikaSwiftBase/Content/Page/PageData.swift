@@ -24,7 +24,7 @@ public class PageData: ContentData {
         }
     }
 
-    override init() {
+    override public init() {
         publishDate = nil
         publishedContent = ""
         super.init()
