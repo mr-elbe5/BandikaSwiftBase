@@ -18,6 +18,10 @@ public class Log{
     public static var delegate : LogDelegate? = nil
     
     public static var logFileUrl = Paths.logFile.toFileUrl()!
+
+    public static var queue = Array<LogChunk>()
+
+    public static var useQueue = false
     
     public static func info(_ string: String){
         log(string,level: .info)
@@ -38,6 +42,19 @@ public class Log{
     public static func log(_ string: String, level : LogLevel){
         let msg = level.rawValue + Date().dateTimeString() + " " + string
         Files.appendToFile(text: msg + "\n", url: logFileUrl)
-        delegate?.updateLog()
+        if useQueue {
+            queue.append(LogChunk(msg, level: level))
+            delegate?.updateLog()
+        }
+    }
+
+    public static func getChunks() -> Array<LogChunk>?{
+        if queue.isEmpty
+        {
+            return nil
+        }
+        let result = queue
+        queue = Array<LogChunk>()
+        return result
     }
 }
