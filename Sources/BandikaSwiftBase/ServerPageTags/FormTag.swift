@@ -37,7 +37,7 @@ public class FormTag: ServerPageTag {
         if ajax {
             html.append("""
                     <script type="text/javascript">
-                        $('#{{name}}').submit(public function (event) {
+                        $('#{{name}}').submit(function (event) {
                             var $this = $(this);
                             event.preventDefault();
                             var params = $this.{{serialize}}();

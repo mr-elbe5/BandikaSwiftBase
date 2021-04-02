@@ -25,7 +25,7 @@ extension FullPageData{
         </form>
         <script type="text/javascript">
             $('#content').ckeditor({toolbar : 'Full',filebrowserBrowseUrl : '/ajax/ckeditor/openLinkBrowser/{{id}}',filebrowserImageBrowseUrl : '/ajax/ckeditor/openImageBrowser/{{id}}'});
-            public function updateEditor(){
+            function updateEditor(){
              if (CKEDITOR) {
                  $('input[name="content"]').val(CKEDITOR.instances['content'].getData());
              }
