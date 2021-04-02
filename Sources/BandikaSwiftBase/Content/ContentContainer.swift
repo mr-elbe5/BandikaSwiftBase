@@ -174,7 +174,7 @@ public class ContentContainer: DataContainer {
             contentDictionary[data.id] = data
             urlDictionary[data.getUrl()] = data
             data.changerId = userId
-            data.changeDate = Application.instance.currentTime
+            data.changeDate = TimeService.instance.currentTime
             setHasChanged()
             return true
         } else {
@@ -194,7 +194,7 @@ public class ContentContainer: DataContainer {
             original.copyPageAttributes(from: data)
             original.increaseVersion()
             original.changerId = userId
-            original.changeDate = Application.instance.currentTime
+            original.changeDate = TimeService.instance.currentTime
             setHasChanged()
             success = true
         } else {
@@ -209,7 +209,7 @@ public class ContentContainer: DataContainer {
             unlock()
         }
         if let contentData = data as? PageData {
-            contentData.publishDate = Application.instance.currentTime
+            contentData.publishDate = TimeService.instance.currentTime
             setHasChanged()
         }
         return true
@@ -230,7 +230,7 @@ public class ContentContainer: DataContainer {
                 data.inheritRightsFromParent(parent: newParent)
                 data.increaseVersion()
                 data.changerId = userId
-                data.changeDate = Application.instance.currentTime
+                data.changeDate = TimeService.instance.currentTime
                 setHasChanged()
                 success = true
             }
@@ -272,7 +272,7 @@ public class ContentContainer: DataContainer {
             original.groupRights.removeAll()
             original.groupRights.addAll(from: rightDictionary)
             original.changerId = userId
-            original.changeDate = Application.instance.currentTime
+            original.changeDate = TimeService.instance.currentTime
             setHasChanged()
             success = true
         } else {
@@ -337,7 +337,7 @@ public class ContentContainer: DataContainer {
                 parent.files.append(data)
                 fileDictionary[data.id] = data
                 data.changerId = userId
-                data.changeDate = Application.instance.currentTime
+                data.changeDate = TimeService.instance.currentTime
                 setHasChanged()
                 success = true
             } else {
@@ -382,7 +382,7 @@ public class ContentContainer: DataContainer {
             oldParent.files.remove(obj: data)
             newParent.files.append(data)
             data.changerId = userId
-            data.changeDate = Application.instance.currentTime
+            data.changeDate = TimeService.instance.currentTime
             data.increaseVersion()
             setHasChanged()
             success = true

@@ -6,42 +6,17 @@
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses/>.
 */
-
 import Foundation
 
-public class RegularAction : QueuedAction{
+public struct TimeService{
 
-    public var nextExecution:  Date
+    public static var instance = TimeService()
 
-    override public init(){
-        nextExecution = TimeService.instance.currentTime
-        super.init()
-    }
-
-    public var intervalMinutes : Int{
+    public var currentTime : Date{
         get{
-            return 0
-        }
-    }
-
-    public var isActive : Bool{
-        get{
-            intervalMinutes != 0
-        }
-    }
-
-    // other methods
-
-    public func checkNextExecution() {
-        if isActive{
-            let now = TimeService.instance.currentTime
-            let next = nextExecution
-            if now > next {
-                ActionQueue.instance.addAction(self)
-                let seconds = intervalMinutes * 60
-                nextExecution = now + Double(seconds)
-            }
+            Date()
         }
     }
 
 }
+

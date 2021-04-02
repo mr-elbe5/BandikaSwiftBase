@@ -66,7 +66,7 @@ public class FullPageData: PageData {
                            """.format(language: request.language, [
                                 "cssClass": cssClass,
                                 "content": content]), indented: false)
-        publishDate = Application.instance.currentTime
+        publishDate = TimeService.instance.currentTime
     }
 
     override public func readRequest(_ request: Request) {

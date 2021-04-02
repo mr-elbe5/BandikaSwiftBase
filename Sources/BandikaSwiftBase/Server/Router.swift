@@ -9,6 +9,11 @@
 
 import Foundation
 
+public protocol RouterDelegate{
+    func startApplication()
+    func stopApplication()
+}
+
 public struct Router {
 
     public static let controllerPrefix = "/ctrl/"
@@ -19,6 +24,8 @@ public struct Router {
     public static let htmlSuffix = ".html"
     
     public static var instance = Router()
+
+    public var delegate : RouterDelegate? = nil
     
     public func route(_ request: Request) -> Response?{
         let path = rewritePath(requestPath: request.path)
@@ -60,13 +67,13 @@ public struct Router {
             return StaticFileController.instance.processLayoutPath(path: path, request: request)
         }
         // shutdown request
-        if path.hasPrefix(Router.shutdownPrefix) {
+        if path.hasPrefix(Router.shutdownPrefix), let delegate = delegate{
             let pathSegments = path.split("/")
             if pathSegments.count > 1 {
                 let shutdownCode = pathSegments[1]
                 if shutdownCode == Statics.instance.shutdownCode {
                     DispatchQueue.global(qos: .userInitiated).async {
-                        Application.instance.stop()
+                        delegate.stopApplication()
                     }
                     return Response(code: .ok)
                 }
