@@ -175,7 +175,6 @@ public class ContentData : BaseData{
     override public func readRequest(_ request: Request) {
         displayName = request.getString("displayName").trim()
         name = displayName.toSafeWebName()
-        print(name)
         description = request.getString("description")
         keywords = request.getString("keywords")
         master = request.getString("master")

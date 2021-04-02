@@ -160,7 +160,6 @@ public class FileData: BaseData {
         displayName = request.getString("displayName").trim()
         description = request.getString("description")
         if let memoryFile = request.getFile("file") {
-            print("has memory file")
             fileName = memoryFile.name
             contentType = memoryFile.contentType
             fileType = FileType.fromContentType(contentType: contentType)

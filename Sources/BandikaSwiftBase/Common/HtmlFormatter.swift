@@ -44,7 +44,7 @@ public struct HtmlFormatter{
             case ">":
                 if !quoted {
                     if !inTag {
-                        print("tag end mismatch")
+                        Log.warn("tag end mismatch")
                         continue
                     }
                     var code = src.substr(start+1, i)

@@ -13,6 +13,20 @@ public struct Localizer{
 
     public var bundles = Dictionary<String, Bundle>()
 
+    public func initialize(languages: Array<String>, bundleLocation: String){
+        Log.info("initializing languages")
+        for lang in languages{
+            let path = bundleLocation.appendPath(lang + ".lproj")
+            if let bundle = Bundle(path: path){
+                Localizer.instance.bundles[lang] = bundle
+                Log.info("found language bundle for '\(lang)'")
+            }
+            else{
+                Log.warn("language bundle not found at \(path)")
+            }
+        }
+    }
+
     public func localize(src: String) -> String{
         NSLocalizedString(src, comment: "")
     }

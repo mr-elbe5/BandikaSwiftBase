@@ -199,8 +199,7 @@ public class Request {
     }
 
     public func getFile(_ name: String) -> MemoryFile?{
-        print("files: \(files.keys)")
-        return files[name]
+        files[name]
     }
 
     public func setSessionAttribute(_ name: String, value: Any){
