@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class TextFieldTag: ServerPageTag {
+public class TextFieldTag: PageTag {
 
     override public class var type: TagType {
-        .spgTextField
+        "textfield"
     }
 
     public var text = ""
@@ -27,14 +29,14 @@ public class TextFieldTag: ServerPageTag {
                     if (rows > 1) {
                         html.append("""
                                    <textarea public class="editField" name="{{identifier}}" rows="{{rows}}">{{content}}</textarea>
-                                   """.format(language: request.language, [
+                                   """.replacePlaceholders(language: request.language, [
                                     "identifier": field.identifier.toHtml(),
                                     "rows": String(rows),
                                     "content": (field.content.isEmpty ? text : field.content).toHtml()]))
                     } else {
                         html.append("""
                                     <input type="text" public class="editField" name="{{identifier}}" placeholder="{{identifier}}" value="{{content}}" />
-                                    """.format(language: request.language, [
+                                    """.replacePlaceholders(language: request.language, [
                                         "identifier": field.identifier.toHtml(),
                                         "content": (field.content.isEmpty ? text : field.content).toHtml()]))
                     }
@@ -50,4 +52,10 @@ public class TextFieldTag: ServerPageTag {
         return html
     }
 
+}
+
+public class TextFieldTagCreator : TagCreator{
+    public func create() -> PageTag{
+        TextFieldTag()
+    }
 }

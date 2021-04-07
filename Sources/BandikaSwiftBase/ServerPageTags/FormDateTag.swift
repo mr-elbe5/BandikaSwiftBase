@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
 public class FormDateTag: FormLineTag {
 
     override public class var type: TagType {
-        .spgFormDate
+        "formdate"
     }
 
     override public func getPreControlHtml(request: Request) -> String{
@@ -23,7 +25,7 @@ public class FormDateTag: FormLineTag {
                         <input type="text" id="{{name}}" name="{{name}}" public class="form-control datepicker" value="{{value}}" />
                     </div>
                     <script type="text/javascript">$('#{{name}}').datepicker({language: '{{language}}'});</script>
-                    """.format(language: request.language, [
+                    """.replacePlaceholders(language: request.language, [
             "name" : name,
             "value" : value.toHtml(),
             "language" : request.language]
@@ -31,4 +33,10 @@ public class FormDateTag: FormLineTag {
         return html
     }
 
+}
+
+public class FormDateTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FormDateTag()
+    }
 }

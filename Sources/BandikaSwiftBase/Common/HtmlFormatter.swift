@@ -8,6 +8,7 @@
 */
 
 import Foundation
+import SwiftyLog
 
 public struct HtmlFormatter{
 

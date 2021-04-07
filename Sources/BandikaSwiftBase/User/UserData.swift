@@ -8,6 +8,8 @@
 */
 
 import Foundation
+import SwiftyLog
+import SwiftyHttpServer
 
 public class UserData: BaseData {
 

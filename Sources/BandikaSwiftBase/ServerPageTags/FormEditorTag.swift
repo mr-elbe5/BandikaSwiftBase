@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
 public class FormEditorTag : FormLineTag{
 
     override public class var type: TagType {
-        .spgFormEditor
+        "formeditor"
     }
 
     public var type = "text"
@@ -25,7 +27,7 @@ public class FormEditorTag : FormLineTag{
         height = getStringAttribute("height", request)
         return """
                <textarea id="{{name}}" name="{{name}}" data-editor="{{type}}" data-gutter="1" {{height}}>
-               """.format(language: request.language, [
+               """.replacePlaceholders(language: request.language, [
                     "name" :  name,
                     "type" : type,
                     "height" : height.isEmpty ? "" : "style=\"height:\(height)\""]
@@ -36,10 +38,16 @@ public class FormEditorTag : FormLineTag{
         """
                 </textarea>
                 <small id="{{name}}Hint" public class="form-text text-muted">{{hint}}</small>
-        """.format(language: request.language, [
+        """.replacePlaceholders(language: request.language, [
                 "name" : name,
                 "hint" : hint.hasPrefix("_") ? hint.toLocalizedHtml(language: request.language) : hint.toHtml()]
         )
     }
 
+}
+
+public class FormEditorTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FormEditorTag()
+    }
 }

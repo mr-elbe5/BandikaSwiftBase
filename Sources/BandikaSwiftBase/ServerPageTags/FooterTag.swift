@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class FooterTag: ServerPageTag {
+public class FooterTag: PageTag {
 
     override public class var type: TagType {
-        .spgFooter
+        "footer"
     }
 
     override public func getHtml(request: Request) -> String {
@@ -23,7 +25,7 @@ public class FooterTag: ServerPageTag {
                                 <a public class="nav-link">&copy; {{copyRight}}
                                 </a>
                             </li>
-                    """.format(language: request.language, [
+                    """.replacePlaceholders(language: request.language, [
             "copyRight": "_copyright".toLocalizedHtml(language: request.language)]
         ))
         for child in ContentContainer.instance.contentRoot.children {
@@ -33,7 +35,7 @@ public class FooterTag: ServerPageTag {
                                 <a public class="nav-link" href="{{url}}">{{displayName}}
                                 </a>
                             </li>
-                            """.format(language: request.language, [
+                            """.replacePlaceholders(language: request.language, [
                     "url": child.getUrl().toHtml(),
                     "displayName": child.displayName.toHtml()]
                 ))
@@ -45,4 +47,10 @@ public class FooterTag: ServerPageTag {
         return html
     }
 
+}
+
+public class FooterTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FooterTag()
+    }
 }

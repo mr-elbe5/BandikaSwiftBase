@@ -8,6 +8,8 @@
 */
 
 import Foundation
+import SwiftyHttpServer
+import SwiftyLog
 
 public class GroupController: Controller {
 
@@ -15,7 +17,7 @@ public class GroupController: Controller {
 
     override public class var type: ControllerType {
         get {
-            .group
+            "group"
         }
     }
 
@@ -98,21 +100,21 @@ public class GroupController: Controller {
     }
 
     public func showEditGroup(group: GroupData, request: Request) -> Response {
-        request.addPageVar("url", "/ctrl/group/saveGroup/\(group.id)")
-        request.addPageVar("id", String(group.id))
-        request.addPageVar("name", group.name.toHtml())
-        request.addPageVar("notes", group.notes.trim().toHtml())
+        request.addPageString("url", "/ctrl/group/saveGroup/\(group.id)")
+        request.addPageString("id", String(group.id))
+        request.addPageString("name", group.name.toHtml())
+        request.addPageString("notes", group.notes.trim().toHtml())
         var str = ""
         for zone in SystemZone.allCases {
             str.append(FormCheckTag.getCheckHtml(request: request, name: "zoneright_"+zone.rawValue, value: String(true), label: ("_zone."+zone.rawValue).toLocalizedHtml(language: request.language), checked: group.hasSystemRight(zone: zone)))
         }
-        request.addPageVar("rightChecks", str)
+        request.addPageString("rightChecks", str)
         str = ""
         for user in UserContainer.instance.users {
             str.append(FormCheckTag.getCheckHtml(request: request, name: "userIds", value: String(user.id), label: user.name, checked: group.userIds.contains(user.id)))
         }
-        request.addPageVar("userChecks", str)
-        return ForwardResponse(page: "user/editGroup.ajax", request: request)
+        request.addPageString("userChecks", str)
+        return ForwardResponse(path: "user/editGroup.ajax", request: request)
     }
 
 }

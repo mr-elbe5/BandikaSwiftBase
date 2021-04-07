@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class SysNavTag: ServerPageTag {
+public class SysNavTag: PageTag {
 
     override public class var type: TagType {
-        .spgSysNav
+        "sysnav"
     }
 
     override public func getHtml(request: Request) -> String {
@@ -22,7 +24,7 @@ public class SysNavTag: ServerPageTag {
                         <li public class="nav-item">
                         <a public class="nav-link fa fa-home" href="/" title="{{_home}}"></a>
                         </li>
-                    """.format(language: request.language, nil))
+                    """.replacePlaceholders(language: request.language, nil))
         if (request.isLoggedIn) {
             let content = request.getSafeContent()
             if SystemZone.hasUserAnySystemRight(user: request.user) {
@@ -30,7 +32,7 @@ public class SysNavTag: ServerPageTag {
                         <li public class="nav-item">
                             <a public class="nav-link fa fa-cog" href="/ctrl/admin/openContentAdministration" title="{{_administration}}"></a>
                         </li>
-                        """.format(language: request.language, nil))
+                        """.replacePlaceholders(language: request.language, nil))
             }
             if let page = content as? PageData {
                 if request.viewType != ViewType.edit && Right.hasUserEditRight(user: request.user, content: content) {
@@ -38,7 +40,7 @@ public class SysNavTag: ServerPageTag {
                         <li public class="nav-item">
                             <a public class="nav-link fa fa-edit" href="/ctrl/{{type}}/openEditPage/{{id}}" title="{{_editPage}}"></a>
                         </li>
-                        """.format(language: request.language, [
+                        """.replacePlaceholders(language: request.language, [
                             "type": content.type.rawValue,
                             "id": String(content.id)]))
                     if page.hasUnpublishedDraft() {
@@ -48,7 +50,7 @@ public class SysNavTag: ServerPageTag {
                         <li public class="nav-item">
                             <a public class="nav-link fa fa-eye-slash" href="/ctrl/{{type}}/showDraft/{{id}}" title="{{_showDraft}}" ></a>
                         </li>
-                        """.format(language: request.language, [
+                        """.replacePlaceholders(language: request.language, [
                             "type": content.type.rawValue,
                             "id": String(content.id)]))
                             } else {
@@ -56,7 +58,7 @@ public class SysNavTag: ServerPageTag {
                         <li public class="nav-item">
                             <a public class="nav-link fa fa-eye" href="/ctrl/{{type}}/showPublished/{{id}}" title="{{_showPublished}}"></a>
                         </li>
-                        """.format(language: request.language, [
+                        """.replacePlaceholders(language: request.language, [
                             "type": content.type.rawValue,
                             "id": String(content.id)]))
                             }
@@ -66,7 +68,7 @@ public class SysNavTag: ServerPageTag {
                         <li public class="nav-item">
                             <a public class="nav-link fa fa-thumbs-up" href="/ctrl/{{type}}/publishPage/{{id}}" title="{{_publish}}"></a>
                         </li>
-                        """.format(language: request.language, [
+                        """.replacePlaceholders(language: request.language, [
                             "type": content.type.rawValue,
                             "id": String(content.id)]))
                         }
@@ -82,13 +84,13 @@ public class SysNavTag: ServerPageTag {
                         <li public class="nav-item">
                             <a public class="nav-link fa fa-sign-out" href="/ctrl/user/logout" title="{{_logout}}"></a>
                         </li>
-                        """.format(language: request.language, nil))
+                        """.replacePlaceholders(language: request.language, nil))
         } else {
             html.append("""
                         <li public class="nav-item">
                             <a public class="nav-link fa fa-user-o" href="" onclick="return openModalDialog('/ajax/user/openLogin');" title="{{_login}}"></a>
                         </li>
-                        """.format(language: request.language, nil))
+                        """.replacePlaceholders(language: request.language, nil))
         }
         html.append("""
                     </ul>
@@ -96,4 +98,10 @@ public class SysNavTag: ServerPageTag {
         return html
     }
 
+}
+
+public class SysNavTagCreator : TagCreator{
+    public func create() -> PageTag{
+        SysNavTag()
+    }
 }

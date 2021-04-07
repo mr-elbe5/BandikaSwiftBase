@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class SectionTag: ServerPageTag {
+public class SectionTag: PageTag {
 
     override public class var type: TagType {
-        .spgSection
+        "section"
     }
 
     public var css = ""
@@ -44,7 +46,7 @@ public class SectionTag: ServerPageTag {
                             <div public class="btn-group btn-group-sm editheader">
                                 <button public class="btn  btn-primary dropdown-toggle fa fa-plus" data-toggle="dropdown"  title="{{newPart}}"></button>
                                 <div public class="dropdown-menu">
-                    """.format(language: request.language, [
+                    """.replacePlaceholders(language: request.language, [
             "css": section.cssClass,
             "id": String(section.sectionId),
             "name": section.name.toHtml(),
@@ -55,10 +57,10 @@ public class SectionTag: ServerPageTag {
                                 <a public class="dropdown-item" href="" onclick="return addPart(-1,'{{sectionName}}','{{partType}}','{{templateName}}');">
                                     {{templateDisplayName}}
                                 </a>
-                            """.format(language: request.language, [
+                            """.replacePlaceholders(language: request.language, [
                     "sectionName": section.name.toHtml(),
                     "partType": PartType.templatepart.rawValue.toHtml(),
-                    "templateName": template.name.toHtml(),
+                    "templateName": template.path.toHtml(),
                     "templateDisplayName": template.displayName.toHtml()]
                 ))
             }
@@ -81,7 +83,7 @@ public class SectionTag: ServerPageTag {
         var html = ""
         html.append("""
                     <div public class="section {{css}}">
-                    """.format(language: request.language, [
+                    """.replacePlaceholders(language: request.language, [
                         "css": section.cssClass]
         ))
         for partData in section.parts {
@@ -93,4 +95,10 @@ public class SectionTag: ServerPageTag {
         return html
     }
 
+}
+
+public class SectionTagCreator : TagCreator{
+    public func create() -> PageTag{
+        SectionTag()
+    }
 }

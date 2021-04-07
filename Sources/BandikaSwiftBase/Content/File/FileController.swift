@@ -7,6 +7,8 @@
  You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses/>.
 */
 import Foundation
+import SwiftyHttpServer
+import SwiftyLog
 
 public class FileController: Controller {
 
@@ -14,7 +16,7 @@ public class FileController: Controller {
 
     override public class var type: ControllerType {
         get {
-            .file
+            "file"
         }
     }
 
@@ -36,7 +38,7 @@ public class FileController: Controller {
 
     public func show(request: Request) -> Response {
         var path = request.path
-        path.removeFirst(Router.filesPrefix.count)
+        path.removeFirst(BandikaRouter.filesPrefix.count)
         path = path.pathWithoutExtension()
         var isPreview = false
         if path.hasPrefix("preview"){
@@ -229,25 +231,25 @@ public class FileController: Controller {
     }
 
     public func showEditFile(file: FileData, request: Request) -> Response {
-        request.addPageVar("url", "/ctrl/file/saveFile/\(file.id)")
+        request.addPageString("url", "/ctrl/file/saveFile/\(file.id)")
         setPageVars(file: file, request: request)
-        return ForwardResponse(page: "file/editFile.ajax", request: request)
+        return ForwardResponse(path: "file/editFile.ajax", request: request)
     }
 
     public func setPageVars(file: FileData, request: Request) {
-        request.addPageVar("id", String(file.id))
-        request.addPageVar("creationDate", file.creationDate.dateTimeString())
+        request.addPageString("id", String(file.id))
+        request.addPageString("creationDate", file.creationDate.dateTimeString())
         if let user = UserContainer.instance.getUser(id: file.creatorId) {
-            request.addPageVar("creatorName", user.name.toHtml())
+            request.addPageString("creatorName", user.name.toHtml())
         }
-        request.addPageVar("changeDate", String(file.changeDate.dateTimeString()))
+        request.addPageString("changeDate", String(file.changeDate.dateTimeString()))
         if let user = UserContainer.instance.getUser(id: file.changerId) {
-            request.addPageVar("changerName", user.name.toHtml())
+            request.addPageString("changerName", user.name.toHtml())
         }
-        request.addPageVar("fileName", file.fileName.toHtml())
-        request.addPageVar("fileRequired", String(file.isNew))
-        request.addPageVar("displayName", file.displayName.toHtml())
-        request.addPageVar("description", file.description.trim().toHtml())
+        request.addPageString("fileName", file.fileName.toHtml())
+        request.addPageString("fileRequired", String(file.isNew))
+        request.addPageString("displayName", file.displayName.toHtml())
+        request.addPageString("description", file.description.trim().toHtml())
     }
 
 }

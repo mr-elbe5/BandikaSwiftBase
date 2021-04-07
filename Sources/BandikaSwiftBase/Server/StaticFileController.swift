@@ -1,33 +1,16 @@
-/*
- SwiftyBandika CMS - A Swift based Content Management System with JSON Database
- Copyright (C) 2021 Michael Roennau
-
- This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses/>.
-*/
+//
+// Created by Michael Rönnau on 07.04.21.
+//
 
 import Foundation
+import SwiftyHttpServer
+import SwiftyLog
 
-public class StaticFileController: Controller {
-    
-    public static var instance = StaticFileController()
-    
-    public func processPath(path: String, request: Request) -> Response?{
-        //Log.info("loading static file \(path)")
-        let fullPath = Paths.webDirectory.appendPath(path.makeRelativePath())
-        if let data : Data = Files.readFile(path: fullPath){
-            let contentType = MimeType.from(fullPath)
-            return Response(data: data, fileName: fullPath.lastPathComponent(), contentType: contentType)
-        }
-        Log.info("reading file from \(fullPath) failed")
-        return Response(code: .notFound)
-    }
+extension StaticFileController{
 
     public func processLayoutPath(path: String, request: Request) -> Response?{
-        //Log.info("loading static file \(path)")
         var path = path
-        path.removeFirst(Router.layoutPrefix.count)
+        path.removeFirst(BandikaRouter.layoutPrefix.count)
         let fullPath = Paths.layoutDirectory.appendPath(path)
         if let data : Data = Files.readFile(path: fullPath){
             let contentType = MimeType.from(fullPath)
@@ -47,5 +30,5 @@ public class StaticFileController: Controller {
             }
         }
     }
-    
+
 }

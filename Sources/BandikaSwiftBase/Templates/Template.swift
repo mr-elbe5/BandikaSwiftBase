@@ -8,6 +8,8 @@
 */
 
 import Foundation
+import SwiftyHttpServer
+import SwiftyLog
 
 public class Template : ServerPage{
 
@@ -28,10 +30,6 @@ public class Template : ServerPage{
         }
     }
 
-    override public func load() -> Bool{
-        fatalError("not implemented")
-    }
-
     public func load(type: TemplateType, fileName: String) -> Bool{
         let path = Paths.templateDirectory.appendPath(type.rawValue).appendPath(fileName)
         if !Files.fileExists(path: path){
@@ -48,7 +46,7 @@ public class Template : ServerPage{
                 if let err = error as? ParseError {
                     Log.error(err.message)
                 }
-                Log.error(" could not parse template \(name)")
+                Log.error(" could not parse template \(path)")
                 return false
             }
         }
@@ -64,7 +62,7 @@ public class Template : ServerPage{
                 if let typeName = attr["type"]{
                     if let type = TemplateType(rawValue: typeName) {
                         self.type = type
-                        name = attr["name"] ?? ""
+                        path = attr["name"] ?? ""
                         displayName = attr["displayName"] ?? ""
                         css = attr["css"] ?? ""
                         p1 = str.index(tagEnd, offsetBy: 1)

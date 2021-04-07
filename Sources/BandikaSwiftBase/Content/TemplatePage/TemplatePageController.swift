@@ -8,6 +8,7 @@
 */
 
 import Foundation
+import SwiftyHttpServer
 
 public class TemplatePageController: PageController {
 
@@ -15,7 +16,7 @@ public class TemplatePageController: PageController {
 
     override public class var type: ControllerType {
         get {
-            .templatepage
+            "templatepage"
         }
     }
 
@@ -52,9 +53,9 @@ public class TemplatePageController: PageController {
         if let cnt = request.getSessionContent(type: TemplatePageData.self){
             request.setContent(cnt)
         }
-        request.addPageVar("url", "/ctrl/templatepage/saveContentData/\(contentData.id)")
+        request.addPageString("url", "/ctrl/templatepage/saveContentData/\(contentData.id)")
         setEditPageVars(contentData: contentData, request: request)
-        return ForwardResponse(page: "templatepage/editContentData.ajax", request: request)
+        return ForwardResponse(path: "templatepage/editContentData.ajax", request: request)
     }
 
     override public func setEditPageVars(contentData: ContentData, request: Request) {
@@ -71,7 +72,7 @@ public class TemplatePageController: PageController {
                             """)
                 }
             }
-            request.addPageVar("templateOptions", str)
+            request.addPageString("templateOptions", str)
         }
     }
 

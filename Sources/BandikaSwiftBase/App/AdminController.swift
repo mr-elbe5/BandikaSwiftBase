@@ -8,6 +8,7 @@
 */
 
 import Foundation
+import SwiftyHttpServer
 
 public class AdminController: Controller {
 
@@ -15,7 +16,7 @@ public class AdminController: Controller {
 
     override public class var type: ControllerType {
         get {
-            .admin
+            "admin"
         }
     }
 

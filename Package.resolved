@@ -9,6 +9,42 @@
           "revision": "3be4e0980075de10a4bc8dee07491d49175cfd7a",
           "version": "2.27.0"
         }
+      },
+      {
+        "package": "SwiftyDataExtensions",
+        "repositoryURL": "https://github.com/mr-elbe5/SwiftyDataExtensions",
+        "state": {
+          "branch": null,
+          "revision": "7ed8d32e305f82a7c323d3b1c5d3a575f159c868",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "SwiftyHttpServer",
+        "repositoryURL": "https://github.com/mr-elbe5/SwiftyHttpServer",
+        "state": {
+          "branch": null,
+          "revision": "6493a85b1b6a90cf3d2bf7c26a9a1555b31430fa",
+          "version": "1.1.4"
+        }
+      },
+      {
+        "package": "SwiftyLog",
+        "repositoryURL": "https://github.com/mr-elbe5/SwiftyLog",
+        "state": {
+          "branch": null,
+          "revision": "d6582ebe98a1f69e0941e141dd3f4534e3e4b820",
+          "version": "1.0.1"
+        }
+      },
+      {
+        "package": "SwiftyStringExtensions",
+        "repositoryURL": "https://github.com/mr-elbe5/SwiftyStringExtensions",
+        "state": {
+          "branch": null,
+          "revision": "4bdfcafb0dbe7098b5d924b61646c371966488a0",
+          "version": "1.0.4"
+        }
       }
     ]
   },

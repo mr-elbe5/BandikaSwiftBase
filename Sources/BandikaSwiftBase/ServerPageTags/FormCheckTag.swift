@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class FormCheckTag: ServerPageTag {
+public class FormCheckTag: PageTag {
 
     override public class var type: TagType {
-        .spgFormCheck
+        "formcheck"
     }
 
     public var name = ""
@@ -48,7 +50,7 @@ public class FormCheckTag: ServerPageTag {
 
     override public func getStartHtml(request: Request) -> String {
         var html = ""
-        html.append(getPreHtml().format(language: request.language, [
+        html.append(getPreHtml().replacePlaceholders(language: request.language, [
             "name": name.toHtml(),
             "value": value.toHtml(),
             "checked": checked ? "checked" : ""
@@ -63,7 +65,7 @@ public class FormCheckTag: ServerPageTag {
     }
 
     public static func getCheckHtml(request: Request, name: String, value: String, label: String, checked: Bool) -> String{
-        var html = checkPreHtml.format(language: request.language, [
+        var html = checkPreHtml.replacePlaceholders(language: request.language, [
             "name": name.toHtml(),
             "value": value.toHtml(),
             "checked": checked ? "checked" : ""])
@@ -73,4 +75,10 @@ public class FormCheckTag: ServerPageTag {
         return html
     }
 
+}
+
+public class FormCheckTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FormCheckTag()
+    }
 }

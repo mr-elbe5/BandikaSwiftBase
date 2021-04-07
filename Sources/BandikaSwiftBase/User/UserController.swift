@@ -8,6 +8,8 @@
 */
 
 import Foundation
+import SwiftyHttpServer
+import SwiftyLog
 
 public class UserController: Controller {
 
@@ -15,7 +17,7 @@ public class UserController: Controller {
 
     override public class var type: ControllerType {
         get {
-            .user
+            "user"
         }
     }
 
@@ -223,18 +225,18 @@ public class UserController: Controller {
     }
 
     public func showLogin(request: Request) -> Response {
-        ForwardResponse(page: "user/login.ajax", request: request)
+        ForwardResponse(path: "user/login.ajax", request: request)
     }
 
     public func showEditUser(user: UserData, request: Request) -> Response {
-        request.addPageVar("url", "/ctrl/user/saveUser/\(user.id)")
+        request.addPageString("url", "/ctrl/user/saveUser/\(user.id)")
         setUserVars(user: user, request: request)
         var str = ""
         for group in UserContainer.instance.groups{
             str.append(FormCheckTag.getCheckHtml(request: request, name: "groupIds", value: String(group.id), label: group.name, checked: group.userIds.contains(user.id)))
         }
-        request.addPageVar("groupChecks", str)
-        return ForwardResponse(page: "user/editUser.ajax", request: request)
+        request.addPageString("groupChecks", str)
+        return ForwardResponse(path: "user/editUser.ajax", request: request)
     }
 
     public func showProfile(user: UserData, request: Request) -> Response {
@@ -243,28 +245,28 @@ public class UserController: Controller {
     }
 
     public func showChangePassword(user: UserData, request: Request) -> Response {
-        request.addPageVar("url", "/ctrl/user/changePassword/\(user.id)")
-        return ForwardResponse(page: "user/editPassword.ajax", request: request)
+        request.addPageString("url", "/ctrl/user/changePassword/\(user.id)")
+        return ForwardResponse(path: "user/editPassword.ajax", request: request)
     }
 
     public func showChangeProfile(user: UserData, request: Request) -> Response {
-        request.addPageVar("url", "/ctrl/user/changeProfile/\(user.id)")
+        request.addPageString("url", "/ctrl/user/changeProfile/\(user.id)")
         setUserVars(user: user, request: request)
-        return ForwardResponse(page: "user/editProfile.ajax", request: request)
+        return ForwardResponse(path: "user/editProfile.ajax", request: request)
     }
 
     public func setUserVars(user: UserData, request: Request){
-        request.addPageVar("id", String(user.id))
-        request.addPageVar("login", user.login.toHtml())
-        request.addPageVar("firstName", user.firstName.toHtml())
-        request.addPageVar("lastName", user.lastName.toHtml())
-        request.addPageVar("title", user.title.toHtml())
-        request.addPageVar("street", user.street.toHtml())
-        request.addPageVar("zipCode", user.zipCode.toHtml())
-        request.addPageVar("city", user.city.toHtml())
-        request.addPageVar("country", user.country.toHtml())
-        request.addPageVar("email", user.email.toHtml())
-        request.addPageVar("phone", user.phone.toHtml())
+        request.addPageString("id", String(user.id))
+        request.addPageString("login", user.login.toHtml())
+        request.addPageString("firstName", user.firstName.toHtml())
+        request.addPageString("lastName", user.lastName.toHtml())
+        request.addPageString("title", user.title.toHtml())
+        request.addPageString("street", user.street.toHtml())
+        request.addPageString("zipCode", user.zipCode.toHtml())
+        request.addPageString("city", user.city.toHtml())
+        request.addPageString("country", user.country.toHtml())
+        request.addPageString("email", user.email.toHtml())
+        request.addPageString("phone", user.phone.toHtml())
     }
 
 }

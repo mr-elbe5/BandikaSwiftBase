@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class FormErrorTag: ServerPageTag {
+public class FormErrorTag: PageTag {
 
     override public class var type: TagType {
-        .spgFormError
+        "formerror"
     }
 
     override public func getHtml(request: Request) -> String {
@@ -25,4 +27,10 @@ public class FormErrorTag: ServerPageTag {
         return html
     }
 
+}
+
+public class FormErrorTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FormErrorTag()
+    }
 }

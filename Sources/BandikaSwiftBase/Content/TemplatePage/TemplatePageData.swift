@@ -8,6 +8,7 @@
 */
 
 import Foundation
+import SwiftyHttpServer
 
 public class TemplatePageData : PageData{
     
@@ -111,10 +112,10 @@ public class TemplatePageData : PageData{
     }
 
     override public func displayEditContent(request: Request) -> String {
-        request.addPageVar("type", type.rawValue)
-        request.addPageVar("id", String(id))
-        request.addPageVar("template", getTemplateHtml(request: request))
-        return ServerPageController.processPage(path: "templatepage/editPageContent.inc", request: request) ?? ""
+        request.addPageString("type", type.rawValue)
+        request.addPageString("id", String(id))
+        request.addPageString("template", getTemplateHtml(request: request))
+        return ServerPageController.instance.processPage(path: "templatepage/editPageContent.inc", request: request) ?? ""
     }
 
     public func getTemplateHtml(request: Request) -> String{

@@ -8,20 +8,28 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
 public class FormFileTag: FormLineTag {
 
     override public class var type: TagType {
-        .spgFormFile
+        "formfile"
     }
 
     override public func getPreControlHtml(request: Request) -> String {
         let multiple = getBoolAttribute("multiple", request)
         return """
                <input type="file" public class="form-control-file" id="{{name}}" name="{{name}}" {{multiple}}>
-               """.format(language: request.language, [
+               """.replacePlaceholders(language: request.language, [
                     "name": name,
                     "multiple": multiple ? "multiple" : ""])
     }
 
+}
+
+public class FormFileTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FormFileTag()
+    }
 }

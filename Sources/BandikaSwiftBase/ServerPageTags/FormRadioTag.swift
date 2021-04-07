@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
 public class FormRadioTag: FormCheckTag {
 
     override public class var type: TagType {
-        .spgFormRadio
+        "formradio"
     }
 
     public static let radioPreHtml =
@@ -27,7 +29,7 @@ public class FormRadioTag: FormCheckTag {
     }
 
     public static func getRadioHtml(request: Request, name: String, value: String, label: String, checked: Bool) -> String{
-        var html = radioPreHtml.format(language: request.language, [
+        var html = radioPreHtml.replacePlaceholders(language: request.language, [
             "name": name.toHtml(),
             "value": value.toHtml(),
             "checked": checked ? "checked" : ""])
@@ -37,4 +39,10 @@ public class FormRadioTag: FormCheckTag {
         return html
     }
 
+}
+
+public class FormRadioTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FormRadioTag()
+    }
 }

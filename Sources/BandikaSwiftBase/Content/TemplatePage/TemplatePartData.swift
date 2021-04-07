@@ -8,6 +8,8 @@
 */
 
 import Foundation
+import SwiftyHttpServer
+import SwiftyLog
 
 public class TemplatePartData: PartData {
 
@@ -112,19 +114,17 @@ public class TemplatePartData: PartData {
             if request.viewType == ViewType.edit {
                 html.append("""
                             <div id="{{wrapperId}}" public class="partWrapper {{css}}" title="{{title}}">
-                            """.format(language: request.language, [
+                            """.replacePlaceholders(language: request.language, [
                     "wrapperId": partWrapperId,
                     "css": partTemplate.css.toHtml(),
-                    "title": editTitle.toHtml()]
-                ))
+                    "title": editTitle.toHtml()]))
                 html.append(getEditPartHeader(request: request))
             } else {
                 html.append("""
                             <div id="{{wrapperId}}" public class="partWrapper {{css}}">
-                            """.format(language: request.language, [
+                            """.replacePlaceholders(language: request.language, [
                     "wrapperId": partWrapperId,
-                    "css": partTemplate.css.toHtml()]
-                ))
+                    "css": partTemplate.css.toHtml()]))
             }
             html.append(partTemplate.getHtml(request: request))
             html.append("</div>")
@@ -140,7 +140,7 @@ public class TemplatePartData: PartData {
                     <script type="text/javascript">
                         updatePartEditors($('#{{wrapperId}}'));
                     </script>
-                    """.format(language: request.language, [
+                    """.replacePlaceholders(language: request.language, [
                         "wrapperId": partWrapperId]))
         return html
     }

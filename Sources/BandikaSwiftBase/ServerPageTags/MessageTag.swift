@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class MessageTag: ServerPageTag{
+public class MessageTag: PageTag{
 
     override public class var type : TagType{
-        .spgMessage
+        "message"
     }
     
     override public func getHtml(request: Request) -> String {
@@ -22,4 +24,10 @@ public class MessageTag: ServerPageTag{
         return ""
     }
     
+}
+
+public class MessageTagCreator : TagCreator{
+    public func create() -> PageTag{
+        MessageTag()
+    }
 }

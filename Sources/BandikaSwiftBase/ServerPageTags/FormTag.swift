@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class FormTag: ServerPageTag {
+public class FormTag: PageTag {
 
     override public class var type: TagType {
-        .spgForm
+        "form"
     }
 
     override public func getHtml(request: Request) -> String {
@@ -25,7 +27,7 @@ public class FormTag: ServerPageTag {
 
         html.append("""
                     <form action="{{url}}" method="post" id="{{name}}" name="{{name}}" accept-charset="UTF-8"{{multi}}>
-                    """.format(language: request.language, [
+                    """.replacePlaceholders(language: request.language, [
                         "url": url,
                         "name": name,
                         "multi": multi ? " enctype=\"multipart/form-data\"" : ""]
@@ -44,7 +46,7 @@ public class FormTag: ServerPageTag {
                             {{post}}('{{url}}', params,'{{target}}');
                         });
                     </script>
-                    """.format(language: request.language, [
+                    """.replacePlaceholders(language: request.language, [
                         "name": name,
                         "serialize": multi ? "serializeFiles" : "serialize",
                         "post": multi ? "postMultiByAjax" : "postByAjax",
@@ -55,4 +57,10 @@ public class FormTag: ServerPageTag {
         return html
     }
 
+}
+
+public class FormTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FormTag()
+    }
 }

@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class FormLineTag: ServerPageTag {
+public class FormLineTag: PageTag {
 
     override public class var type: TagType {
-        .spgFormLine
+        "formline"
     }
 
     public var name = ""
@@ -79,4 +81,10 @@ public class FormLineTag: ServerPageTag {
         ""
     }
 
+}
+
+public class FormLineTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FormLineTag()
+    }
 }

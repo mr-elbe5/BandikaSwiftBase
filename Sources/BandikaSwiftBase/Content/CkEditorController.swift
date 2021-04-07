@@ -8,6 +8,7 @@
 */
 
 import Foundation
+import SwiftyHttpServer
 
 public class CkEditorController: Controller {
 
@@ -15,7 +16,7 @@ public class CkEditorController: Controller {
 
     override public class var type: ControllerType {
         get {
-            .ckeditor
+            "ckeditor"
         }
     }
 
@@ -49,15 +50,15 @@ public class CkEditorController: Controller {
     }
 
     public func showBrowseLinks(request: Request) -> Response{
-        request.setParam("type", "all")
-        request.addPageVar("callbackNum", String(request.getInt("CKEditorpublic funcNum")))
-        return ForwardResponse(page: "ckeditor/browseFiles.ajax", request: request)
+        request.addPageString("type", "all")
+        request.addPageInt("callbackNum", request.getInt("CKEditorpublic funcNum"))
+        return ForwardResponse(path: "ckeditor/browseFiles.ajax", request: request)
     }
 
     public func showBrowseImages(request: Request) -> Response{
         request.setParam("type", "image")
-        request.addPageVar("callbackNum", String(request.getInt("CKEditorpublic funcNum")))
-        return ForwardResponse(page: "ckeditor/browseFiles.ajax", request: request)
+        request.addPageString("callbackNum", String(request.getInt("CKEditorpublic funcNum")))
+        return ForwardResponse(path: "ckeditor/browseFiles.ajax", request: request)
     }
 
 }

@@ -5,7 +5,7 @@
 import Foundation
 import SwiftyHttpServer
 
-extension Controller{
+extension ControllerCache{
 
     public func showHome(request: Request) -> Response{
         let home = ContentContainer.instance.contentRoot
@@ -15,20 +15,20 @@ extension Controller{
         return Response(code: .notFound)
     }
 
-    public func openAdminPage(path: String, request: Request) -> Response {
+    public func openAdminPage(page: String, request: Request) -> Response {
         request.addPageString("title", (Configuration.instance.applicationName + " | " + "_administration".localize(language: request.language)).toHtml())
-        request.addPageString("includeUrl", path)
-        request.addPageBool("hasUserRights", SystemZone.hasUserSystemRight(user: request.user, zone: .user))
-        request.addPageBool("hasContentRights", SystemZone.hasUserSystemRight(user: request.user, zone: .contentEdit))
+        request.addPageString("includeUrl", page)
+        request.addPageString("hasUserRights", String(SystemZone.hasUserSystemRight(user: request.user, zone: .user)))
+        request.addPageString("hasContentRights", String(SystemZone.hasUserSystemRight(user: request.user, zone: .contentEdit)))
         return ForwardResponse(path: "administration/adminMaster", request: request)
     }
 
     public func showUserAdministration(request: Request) -> Response {
-        openAdminPage(path: "administration/userAdministration", request: request)
+        openAdminPage(page: "administration/userAdministration", request: request)
     }
 
     public func showContentAdministration(request: Request) -> Response {
-        openAdminPage(path: "administration/contentAdministration", request: request)
+        openAdminPage(page: "administration/contentAdministration", request: request)
     }
 
     public func showContentAdministration(contentId: Int, request: Request) -> Response {

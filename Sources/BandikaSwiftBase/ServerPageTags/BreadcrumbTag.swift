@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class BreadcrumbTag: ServerPageTag {
+public class BreadcrumbTag: PageTag {
 
     override public class var type: TagType {
-        .spgBreadcrumb
+        "breadcrumb"
     }
 
     override public func getHtml(request: Request) -> String {
@@ -30,10 +32,9 @@ public class BreadcrumbTag: ServerPageTag {
                                     <a href="{{url}}">{{displayName}}
                                     </a>
                                 </li>
-                            """.format(language: request.language, [
+                            """.replacePlaceholders(language: request.language, [
                     "url": content.getUrl().toUri(),
-                    "displayName": content.displayName.toHtml()]
-                ))
+                    "displayName": content.displayName.toHtml()]))
             }
         }
         html.append("""
@@ -41,9 +42,8 @@ public class BreadcrumbTag: ServerPageTag {
                                     <a>{{displayName}}
                                     </a>
                                 </li>
-                    """.format(language: request.language, [
-            "displayName": content.displayName.toHtml()]
-        ))
+                    """.replacePlaceholders(language: request.language, [
+            "displayName": content.displayName.toHtml()]))
         html.append("""
                             </ol>
                         </section>
@@ -51,4 +51,10 @@ public class BreadcrumbTag: ServerPageTag {
         return html
     }
 
+}
+
+public class BreadcrumbTagCreator : TagCreator{
+    public func create() -> PageTag{
+        BreadcrumbTag()
+    }
 }

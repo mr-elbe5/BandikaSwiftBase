@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
 public class FormTextTag : FormLineTag{
 
     override public class var type: TagType {
-        .spgFormText
+        "formtext"
     }
 
     public var value = ""
@@ -23,11 +25,17 @@ public class FormTextTag : FormLineTag{
         maxLength = getIntAttribute("maxLength", request, def: 0)
         return """
                <input type="text" id="{{name}}" name="{{name}}" public class="form-control" value="{{value}}" {{maxLength}} />
-               """.format(language: request.language, [
+               """.replacePlaceholders(language: request.language, [
                     "name" : name,
                     "value" : value,
                     "maxLength" : maxLength > 0 ? "maxlength=\" \(maxLength)\"" : ""]
         )
     }
 
+}
+
+public class FormTextTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FormTextTag()
+    }
 }

@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class UserListTag: ServerPageTag {
+public class UserListTag: PageTag {
 
     override public class var type: TagType {
-        .spgUserList
+        "userlist"
     }
 
     override public func getHtml(request: Request) -> String {
@@ -24,7 +26,7 @@ public class UserListTag: ServerPageTag {
                             <span>{{userName}}&nbsp;({{userId}})</span>
                             <div public class="icons">
                                 <a public class="icon fa fa-pencil" href="" onclick="return openModalDialog('/ajax/user/openEditUser/{{userId}}');" title="{{_edit}}"> </a>
-                        """.format(language: request.language, [
+                        """.replacePlaceholders(language: request.language, [
                 "userOpen": String(user.id == userId),
                 "userName": user.name.toHtml(),
                 "userId": String(user.id)
@@ -32,7 +34,7 @@ public class UserListTag: ServerPageTag {
             if (user.id != UserData.ID_ROOT) {
                 html.append("""
                                 <a public class="icon fa fa-trash-o" href="" onclick="if (confirmDelete()) return linkTo('/ctrl/user/deleteUser/{{userId}}?version={{userVersion}}');" title="{{_delete}}"> </a>
-                            """.format(language: request.language, [
+                            """.replacePlaceholders(language: request.language, [
                     "userId": String(user.id),
                     "userVersion": String(user.version)
                 ]))
@@ -43,5 +45,11 @@ public class UserListTag: ServerPageTag {
                         """)
         }
         return html
+    }
+}
+
+public class UserListTagCreator : TagCreator{
+    public func create() -> PageTag{
+        UserListTag()
     }
 }

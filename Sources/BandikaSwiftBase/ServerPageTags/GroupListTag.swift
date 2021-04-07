@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class GroupListTag: ServerPageTag {
+public class GroupListTag: PageTag {
 
     override public class var type: TagType {
-        .spgGroupList
+        "grouplist"
     }
 
     override public func getHtml(request: Request) -> String {
@@ -27,7 +29,7 @@ public class GroupListTag: ServerPageTag {
                                 <a public class="icon fa fa-trash-o" href="" onclick="if (confirmDelete()) return linkTo('/ctrl/group/deleteGroup/{{groupId}}?version={{groupVersion}}');" title="{{_delete}}"> </a>
                             </div>
                         </li>
-                        """.format(language: request.language, [
+                        """.replacePlaceholders(language: request.language, [
                 "groupOpen": String(group.id == groupId),
                 "groupName": group.name.toHtml(),
                 "groupId": String(group.id),
@@ -35,5 +37,11 @@ public class GroupListTag: ServerPageTag {
             ]))
         }
         return html
+    }
+}
+
+public class GroupListTagCreator : TagCreator{
+    public func create() -> PageTag{
+        GroupListTag()
     }
 }

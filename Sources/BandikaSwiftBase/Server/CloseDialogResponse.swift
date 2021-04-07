@@ -8,17 +8,18 @@
 */
 
 import Foundation
+import SwiftyHttpServer
 
 public class CloseDialogResponse: Response{
 
     public init(url: String, request: Request){
-        request.addPageVar("url", url)
-        request.addPageVar("hasMessage", String(request.hasMessage))
+        request.addPageString("url", url)
+        request.addPageBool("hasMessage", request.hasMessage)
         if request.hasMessage{
-            request.addPageVar("message", request.message!.text)
-            request.addPageVar("messageType", request.message!.type.rawValue)
+            request.addPageString("message", request.message!.text)
+            request.addPageString("messageType", request.message!.type.rawValue)
         }
-        if let html = ServerPageController.processPage(path: "closeDialog.ajax", request: request) {
+        if let html = ServerPageController.instance.processPage(path: "closeDialog.ajax", request: request) {
             super.init(html: html)
         }
         else {

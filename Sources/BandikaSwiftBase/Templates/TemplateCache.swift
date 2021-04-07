@@ -8,6 +8,7 @@
 */
 
 import Foundation
+import SwiftyLog
 
 public struct TemplateCache {
 
@@ -45,7 +46,7 @@ public struct TemplateCache {
             if fileName.hasSuffix(".xml") {
                 var name = fileName
                 name.removeLast(4)
-                let template = Template(name: name)
+                let template = Template(path: name)
                 if template.load(type: type, fileName: fileName) {
                     dict[name] = template
                 }

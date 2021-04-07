@@ -8,6 +8,8 @@
 */
 
 import Foundation
+import SwiftyLog
+import SwiftyHttpServer
 
 public class FullPageData: PageData {
 
@@ -63,7 +65,7 @@ public class FullPageData: PageData {
                                <div public class="{{cssClass}}">
                                    {{content}}
                                </div>
-                           """.format(language: request.language, [
+                           """.replacePlaceholders(language: request.language, [
                                 "cssClass": cssClass,
                                 "content": content]), indented: false)
         publishDate = TimeService.instance.currentTime

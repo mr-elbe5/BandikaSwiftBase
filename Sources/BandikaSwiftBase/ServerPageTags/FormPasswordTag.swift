@@ -8,19 +8,27 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
 public class FormPasswordTag : FormLineTag{
 
     override public class var type: TagType {
-        .spgFormPassword
+        "formpassword"
     }
 
     override public func getPreControlHtml(request: Request) -> String{
         """
         <input type="password" id="{{name}}" name="{{name}}" public class="form-control" />
-        """.format(language: request.language, [
+        """.replacePlaceholders(language: request.language, [
             "name" : name]
         )
     }
 
+}
+
+public class FormPasswordTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FormPasswordTag()
+    }
 }

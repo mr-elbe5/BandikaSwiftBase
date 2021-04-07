@@ -8,13 +8,15 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class ContentTag: ServerPageTag{
+public class ContentTag: PageTag{
 
     public static var pageIncludeParam = "pageInclude"
 
     override public class var type : TagType{
-        .spgContent
+        "content"
     }
     
     override public func getHtml(request: Request) -> String {
@@ -24,7 +26,7 @@ public class ContentTag: ServerPageTag{
         else {
             // page without content, e.g. user profile
             if let pageInclude : String = request.getParam(ContentTag.pageIncludeParam) as? String{
-                if let html = ServerPageController.processPage(path: pageInclude, request: request) {
+                if let html = ServerPageController.instance.processPage(path: pageInclude, request: request) {
                     return html
                 }
             }
@@ -32,4 +34,10 @@ public class ContentTag: ServerPageTag{
         return ""
     }
     
+}
+
+public class ContentTagCreator : TagCreator{
+    public func create() -> PageTag{
+        ContentTag()
+    }
 }

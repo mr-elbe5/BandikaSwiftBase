@@ -8,32 +8,22 @@
 */
 
 import Foundation
+import SwiftyHttpServer
+import SwiftyLog
 
-public protocol RouterDelegate{
-    func startApplication()
-    func stopApplication()
-}
+public class BandikaRouter : Router {
 
-public struct Router {
-
-    public static let controllerPrefix = "/ctrl/"
-    public static let ajaxPrefix = "/ajax/"
     public static let layoutPrefix = "/layout/"
     public static let filesPrefix = "/files/"
-    public static let shutdownPrefix = "/shutdown/"
     public static let htmlSuffix = ".html"
     
-    public static var instance = Router()
-
-    public var delegate : RouterDelegate? = nil
-    
-    public func route(_ request: Request) -> Response?{
+    override public func route(_ request: Request) -> Response?{
         let path = rewritePath(requestPath: request.path)
         // *.html
-        if path.hasSuffix(Router.htmlSuffix) {
+        if path.hasSuffix(BandikaRouter.htmlSuffix) {
             //Log.info("html path: \(path)")
             if let content = ContentContainer.instance.getContent(url: path){
-                if let controller = ControllerFactory.getDataController(type: content.type){
+                if let controller = ControllerCache.get(content.type.rawValue){
                     return controller.processRequest(method: "show", id: content.id, request: request)
                 }
             }
@@ -45,35 +35,33 @@ public struct Router {
             //Log.info("controller path: \(String(describing: pathSegments))")
             if pathSegments.count > 2 {
                 let controllerName = pathSegments[1]
-                if let controllerType = ControllerType(rawValue: controllerName) {
-                    if let controller = ControllerFactory.getController(type: controllerType) {
-                        let method = pathSegments[2]
-                        var id: Int? = nil
-                        if pathSegments.count > 3 {
-                            id = Int(pathSegments[3])
-                        }
-                        return controller.processRequest(method: method, id: id, request: request)
+                if let controller = ControllerCache.get(controllerName) {
+                    let method = pathSegments[2]
+                    var id: Int? = nil
+                    if pathSegments.count > 3 {
+                        id = Int(pathSegments[3])
                     }
+                    return controller.processRequest(method: method, id: id, request: request)
                 }
             }
             return Response(code: .notFound)
         }
         // scontent files from files directory
-        if path.hasPrefix(Router.filesPrefix) {
+        if path.hasPrefix(BandikaRouter.filesPrefix) {
             return FileController.instance.show(request: request)
         }
         // static layout files from layout directory
-        if path.hasPrefix(Router.layoutPrefix) {
+        if path.hasPrefix(BandikaRouter.layoutPrefix) {
             return StaticFileController.instance.processLayoutPath(path: path, request: request)
         }
         // shutdown request
-        if path.hasPrefix(Router.shutdownPrefix), let delegate = delegate{
+        if path.hasPrefix(Router.shutdownPrefix), let server = server{
             let pathSegments = path.split("/")
             if pathSegments.count > 1 {
                 let shutdownCode = pathSegments[1]
                 if shutdownCode == Statics.instance.shutdownCode {
                     DispatchQueue.global(qos: .userInitiated).async {
-                        delegate.stopApplication()
+                        server.stop()
                     }
                     return Response(code: .ok)
                 }
@@ -87,7 +75,7 @@ public struct Router {
         return StaticFileController.instance.processPath(path: path, request: request)
     }
     
-    public func rewritePath(requestPath: String) -> String{
+    override public func rewritePath(requestPath: String) -> String{
         switch requestPath{
         case "": fallthrough
         case "/": return "/home.html"

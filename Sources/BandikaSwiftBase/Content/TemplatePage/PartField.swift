@@ -8,6 +8,7 @@
 */
 
 import Foundation
+import SwiftyHttpServer
 
 public class PartField : TypedData, Codable{
     

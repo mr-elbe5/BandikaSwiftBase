@@ -8,6 +8,8 @@
 */
 
 import Foundation
+import SwiftyHttpServer
+import SwiftyLog
 
 public class ContentController: Controller {
 
@@ -36,10 +38,10 @@ public class ContentController: Controller {
     public func show(id: Int?, request: Request) -> Response? {
         if let id = id, let content = ContentContainer.instance.getContent(id: id) {
             request.setContent(content)
-            request.addPageVar("language", Statics.instance.defaultLocale.languageCode ?? "en")
-            request.addPageVar("title", Statics.title.toHtml())
-            request.addPageVar("keywords", content.keywords.toHtml())
-            request.addPageVar("description", content.description.trim().toHtml())
+            request.addPageString("language", Statics.instance.defaultLocale.languageCode ?? "en")
+            request.addPageString("title", Statics.title.toHtml())
+            request.addPageString("keywords", content.keywords.toHtml())
+            request.addPageString("description", content.description.trim().toHtml())
             let master = TemplateCache.getTemplate(type: TemplateType.master, name: content.master)
             if let html = master?.getHtml(request: request) {
                 return Response(html: HtmlFormatter.format(src: html, indented: true))
@@ -62,7 +64,7 @@ public class ContentController: Controller {
                 data.parentId = parent.id
                 data.parentVersion = parent.version
                 request.setSessionContent(data)
-                if let controller = ControllerFactory.getDataController(type: data.type) as? ContentController{
+                if let controller = ControllerCache.get(data.type.rawValue) as? ContentController{
                     return controller.showEditContent(contentData: data, request: request)
                 }
                 else{
@@ -360,41 +362,41 @@ public class ContentController: Controller {
         if let cnt = request.getSessionContent() {
             request.setContent(cnt)
         }
-        request.addPageVar("url", "/ctrl/content/saveContentData/\(contentData.id)")
+        request.addPageString("url", "/ctrl/content/saveContentData/\(contentData.id)")
         setEditPageVars(contentData: contentData, request: request)
-        return ForwardResponse(page: "content/editContentData.ajax", request: request)
+        return ForwardResponse(path: "content/editContentData.ajax", request: request)
     }
 
     public func setEditPageVars(contentData: ContentData, request: Request) {
-        request.addPageVar("id", String(contentData.id))
-        request.addPageVar("creationDate", contentData.creationDate.dateTimeString())
+        request.addPageString("id", String(contentData.id))
+        request.addPageString("creationDate", contentData.creationDate.dateTimeString())
         if let user = UserContainer.instance.getUser(id: contentData.creatorId) {
-            request.addPageVar("creatorName", user.name.toHtml())
+            request.addPageString("creatorName", user.name.toHtml())
         }
-        request.addPageVar("changeDate", String(contentData.changeDate.dateTimeString()))
+        request.addPageString("changeDate", String(contentData.changeDate.dateTimeString()))
         if let user = UserContainer.instance.getUser(id: contentData.changerId) {
-            request.addPageVar("changerName", user.name.toHtml())
+            request.addPageString("changerName", user.name.toHtml())
         }
-        request.addPageVar("displayName", contentData.displayName.toHtml())
-        request.addPageVar("description", contentData.description.trim().toHtml())
-        request.addConditionalPageVar("isOpenSelected", "selected", if: contentData.accessType == ContentData.ACCESS_TYPE_OPEN)
-        request.addConditionalPageVar("isInheritsSelected", "selected", if: contentData.accessType == ContentData.ACCESS_TYPE_INHERITS)
-        request.addConditionalPageVar("isIndividualSelected", "selected", if: contentData.accessType == ContentData.ACCESS_TYPE_INDIVIDUAL)
-        request.addConditionalPageVar("isNoneNavSelected", "selected", if: contentData.navType == ContentData.NAV_TYPE_NONE)
-        request.addConditionalPageVar("isHeaderNavSelected", "selected", if: contentData.navType == ContentData.NAV_TYPE_HEADER)
-        request.addConditionalPageVar("isFooterNavSelected", "selected", if: contentData.navType == ContentData.NAV_TYPE_FOOTER)
-        request.addPageVar("active", contentData.active ? "true" : "false")
+        request.addPageString("displayName", contentData.displayName.toHtml())
+        request.addPageString("description", contentData.description.trim().toHtml())
+        request.addConditionalPageString("isOpenSelected", "selected", if: contentData.accessType == ContentData.ACCESS_TYPE_OPEN)
+        request.addConditionalPageString("isInheritsSelected", "selected", if: contentData.accessType == ContentData.ACCESS_TYPE_INHERITS)
+        request.addConditionalPageString("isIndividualSelected", "selected", if: contentData.accessType == ContentData.ACCESS_TYPE_INDIVIDUAL)
+        request.addConditionalPageString("isNoneNavSelected", "selected", if: contentData.navType == ContentData.NAV_TYPE_NONE)
+        request.addConditionalPageString("isHeaderNavSelected", "selected", if: contentData.navType == ContentData.NAV_TYPE_HEADER)
+        request.addConditionalPageString("isFooterNavSelected", "selected", if: contentData.navType == ContentData.NAV_TYPE_FOOTER)
+        request.addPageString("active", contentData.active ? "true" : "false")
         var str = FormSelectTag.getOptionHtml(request: request, value: "", isSelected: contentData.master.isEmpty, text: "_pleaseSelect".toLocalizedHtml(language: request.language))
         if let masters = TemplateCache.getTemplates(type: .master) {
             for masterName in masters.keys {
                 str.append(FormSelectTag.getOptionHtml(request: request, value: masterName.toHtml(), isSelected: contentData.master == masterName, text: masterName.toHtml()))
             }
         }
-        request.addPageVar("masterOptions", str)
+        request.addPageString("masterOptions", str)
     }
 
     public func showEditRights(contentData: ContentData, request: Request) -> Response {
-        request.addPageVar("url", "/ctrl/\(contentData.type.rawValue)/saveRights/\(contentData.id)?version=\(contentData.version)")
+        request.addPageString("url", "/ctrl/\(contentData.type.rawValue)/saveRights/\(contentData.id)?version=\(contentData.version)")
         var html = ""
         for group in UserContainer.instance.groups {
             if group.id <= GroupData.ID_MAX_FINAL {
@@ -433,12 +435,12 @@ public class ContentController: Controller {
             html.append(radioTag.getEndHtml(request: request))
             html.append(lineTag.getEndHtml(request: request))
         }
-        request.addPageVar("groupRights", html)
-        return ForwardResponse(page: "content/editGroupRights.ajax", request: request);
+        request.addPageString("groupRights", html)
+        return ForwardResponse(path: "content/editGroupRights.ajax", request: request);
     }
 
     public func showSortChildContents(contentData: ContentData, request: Request) -> Response {
-        request.addPageVar("url", "/ctrl/\(contentData.type.rawValue)/saveChildPageRanking/\(contentData.id)?version=\(contentData.version)")
+        request.addPageString("url", "/ctrl/\(contentData.type.rawValue)/saveChildPageRanking/\(contentData.id)?version=\(contentData.version)")
         var childSortList = Array<(Int,String)>()
         for subpage in contentData.children {
             childSortList.append((subpage.id, subpage.name))
@@ -456,7 +458,7 @@ public class ContentController: Controller {
             select.name = name
             select.label = String(idx)
             select.onChange = onchange
-            html.append(FormSelectTag.preControlHtml.format(language: request.language, [
+            html.append(FormSelectTag.preControlHtml.replacePlaceholders(language: request.language, [
                 "name": name,
                 "onchange": onchange]))
             for i in 0..<childSortList.count {
@@ -466,8 +468,8 @@ public class ContentController: Controller {
             html.append(lineTag.getEndHtml(request: request))
             idx += 1
         }
-        request.addPageVar("sortContents", html)
-        return ForwardResponse(page: "content/sortChildContents.ajax", request: request);
+        request.addPageString("sortContents", html)
+        return ForwardResponse(path: "content/sortChildContents.ajax", request: request);
     }
 
 }

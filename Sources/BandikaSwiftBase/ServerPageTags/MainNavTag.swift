@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class MainNavTag: ServerPageTag {
+public class MainNavTag: PageTag {
 
     override public class var type: TagType {
-        .spgMainNav
+        "mainnav"
     }
 
     override public func getHtml(request: Request) -> String {
@@ -29,7 +31,7 @@ public class MainNavTag: ServerPageTag {
                                 </button>
                                 <div public class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul public class="navbar-nav mr-auto">
-                    """.format(language: request.language, [
+                    """.replacePlaceholders(language: request.language, [
                         "appName": Configuration.instance.applicationName.toHtml()]
         ))
         let home = ContentContainer.instance.contentRoot
@@ -55,7 +57,7 @@ public class MainNavTag: ServerPageTag {
                                                 <a public class="dropdown-item {{active}}"
                                                    href="{{url}}">{{displayName}}
                                                 </a>
-                                """.format(language: request.language, [
+                                """.replacePlaceholders(language: request.language, [
                                     "active": activeIds.contains(data.id) ? "active" : "",
                                     "url": data.getUrl().toUri(),
                                     "displayName": data.displayName.toHtml()]
@@ -65,7 +67,7 @@ public class MainNavTag: ServerPageTag {
                                                 <a public class="dropdown-item {{active}}"
                                                    href="{{url}}">{{displayName}}
                                                 </a>
-                                    """.format(language: request.language, [
+                                    """.replacePlaceholders(language: request.language, [
                                         "active": activeIds.contains(data.id) ? "active" : "",
                                         "url": child.getUrl().toUri(),
                                         "displayName": child.displayName.toHtml()]
@@ -82,7 +84,7 @@ public class MainNavTag: ServerPageTag {
                                                href="{{url}}">{{displayName}}
                                             </a>
                                         </li>
-                                """.format(language: request.language, [
+                                """.replacePlaceholders(language: request.language, [
                                     "active": activeIds.contains(data.id) ? "active" : "",
                                     "url": data.getUrl().toUri(),
                                     "displayName": data.displayName.toHtml()]
@@ -99,4 +101,10 @@ public class MainNavTag: ServerPageTag {
         return html
     }
 
+}
+
+public class MainNavTagCreator : TagCreator{
+    public func create() -> PageTag{
+        MainNavTag()
+    }
 }

@@ -8,6 +8,7 @@
 */
 
 import Foundation
+import SwiftyHttpServer
 
 public class TemplateController: Controller {
 
@@ -15,8 +16,8 @@ public class TemplateController: Controller {
 
     public func processPageInMaster(page: String, request: Request) -> Response{
         request.setParam(ContentTag.pageIncludeParam, page)
-        request.addPageVar("language", Statics.instance.defaultLocale.languageCode ?? "en")
-        request.addPageVar("title", Statics.title.toHtml())
+        request.addPageString("language", Statics.instance.defaultLocale.languageCode ?? "en")
+        request.addPageString("title", Statics.title.toHtml())
         let master = TemplateCache.getTemplate(type: TemplateType.master, name: TemplateCache.defaultMaster)
         if let html = master?.getHtml(request: request) {
             return Response(html: html)

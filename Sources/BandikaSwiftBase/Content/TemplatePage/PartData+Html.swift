@@ -8,6 +8,7 @@
 */
 
 import Foundation
+import SwiftyHttpServer
 
 extension PartData {
 
@@ -21,24 +22,22 @@ extension PartData {
                                         <div public class="btn-group btn-group-sm" role="group">
                                             <button type="button" public class="btn btn-secondary fa fa-plus dropdown-toggle" data-toggle="dropdown" title="{{title}}"></button>
                                             <div public class="dropdown-menu">
-                    """.format(language: request.language, [
+                    """.replacePlaceholders(language: request.language, [
             "positionName": partPositionName,
             "value": String(position),
-            "title": "_newPart".toLocalizedHtml(language: request.language)]
-        ))
+            "title": "_newPart".toLocalizedHtml(language: request.language)]))
         if let templates = TemplateCache.getTemplates(type: TemplateType.part) {
             for tpl in templates.values {
                 html.append("""
                                                         <a public class="dropdown-item" href="" onclick="return addPart({{partId}},'{{sectionName}}','{{partType}}','{{templateName}}');">
                                                              {{displayName}}
                                                         </a>
-                            """.format(language: request.language, [
+                            """.replacePlaceholders(language: request.language, [
                     "partId": String(partId),
                     "sectionName": sectionName.toHtml(),
                     "partType": PartType.templatepart.rawValue.toHtml(),
-                    "templateName": tpl.name.toHtml(),
-                    "displayName": tpl.displayName.toHtml()]
-                ))
+                    "templateName": tpl.path.toHtml(),
+                    "displayName": tpl.displayName.toHtml()]))
             }
         }
         html.append("""
@@ -58,9 +57,8 @@ extension PartData {
                                         </div>
                                     </div>
                                 </div>
-                    """.format(language: request.language, [
-            "partId": String(partId)]
-        ))
+                    """.replacePlaceholders(language: request.language, [
+            "partId": String(partId)]))
         return html
     }
 

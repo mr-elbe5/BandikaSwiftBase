@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class HtmlFieldTag: ServerPageTag {
+public class HtmlFieldTag: PageTag {
 
     override public class var type: TagType {
-        .spgHtmlField
+        "htmlfield"
     }
 
     public var content = ""
@@ -32,7 +34,7 @@ public class HtmlFieldTag: ServerPageTag {
                                             filebrowserImageBrowseUrl : '/ajax/ckeditor/openImageBrowser/{{contentId}}'
                                             });
                                   </script>
-                            """.format(language: request.language, [
+                            """.replacePlaceholders(language: request.language, [
                                 "identifier": field.identifier,
                                 "content": field.content.isEmpty ? content.toHtml() : field.content,
                                 "fieldContent": field.content.toHtml(),
@@ -47,4 +49,10 @@ public class HtmlFieldTag: ServerPageTag {
         return html
     }
 
+}
+
+public class HtmlFieldTagCreator : TagCreator{
+    public func create() -> PageTag{
+        HtmlFieldTag()
+    }
 }

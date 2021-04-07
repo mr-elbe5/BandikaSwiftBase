@@ -8,6 +8,8 @@
 */
 
 import Foundation
+import SwiftyLog
+import SwiftyHttpServer
 
 public struct Paths{
     public static var baseDirectory = "."
@@ -48,6 +50,8 @@ public struct Paths{
         logFile = baseDirectory.appendPath("bandika.log")
         webDirectory = resourceDirectory.appendPath("web")
         serverPagesDirectory = resourceDirectory.appendPath("serverPages")
+        StaticFileController.instance.basePath = webDirectory
+        ServerPageController.instance.basePath = serverPagesDirectory
         defaultContentDirectory = resourceDirectory.appendPath("defaultContent")
         defaultTemplateDirectory = resourceDirectory.appendPath("defaultTemplates")
         defaultLayoutDirectory = resourceDirectory.appendPath("defaultLayout")

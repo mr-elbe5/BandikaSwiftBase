@@ -8,6 +8,8 @@
 */
 
 import Foundation
+import SwiftyLog
+import SwiftyHttpServer
 
 extension FullPageData{
 
@@ -31,7 +33,7 @@ extension FullPageData{
              }
             }
         </script>
-        """.format(language: request.language, [
+        """.replacePlaceholders(language: request.language, [
             "type": type.rawValue.toHtml(),
             "id": String(id),
             "css": cssClass,
@@ -45,7 +47,7 @@ extension FullPageData{
             <div public class="{{css}}">
                 {{content}}
             </div>
-        """.format(language: request.language, [
+        """.replacePlaceholders(language: request.language, [
             "css": cssClass,
             "content": content
         ])

@@ -8,6 +8,9 @@
 */
 
 import Foundation
+import SwiftyHttpServer
+import SwiftyLog
+import SwiftyStringExtensions
 
 public class ContentData : BaseData{
     

@@ -8,11 +8,30 @@
 */
 
 import Foundation
+import SwiftyHttpServer
 
 extension Request{
 
     public static let GROUP_KEY = "$GROUP"
     public static let USER_KEY = "$USER"
+
+    public var user : UserData?{
+        get{
+            getSessionUser()
+        }
+    }
+
+    public var userId : Int{
+        get{
+            getSessionUser()?.id ?? 0
+        }
+    }
+
+    public var isLoggedIn : Bool{
+        get{
+            user != nil
+        }
+    }
 
     public func setSessionGroup(_ group: GroupData){
         setSessionAttribute(Request.GROUP_KEY, value: group)

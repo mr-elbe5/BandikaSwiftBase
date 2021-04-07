@@ -8,6 +8,7 @@
 */
 
 import Foundation
+import SwiftyHttpServer
 
 public class FullPageController : PageController{
     
@@ -15,7 +16,7 @@ public class FullPageController : PageController{
     
     override public class var type : ControllerType{
         get{
-            .fullpage
+            "fullpage"
         }
     }
 
@@ -23,15 +24,15 @@ public class FullPageController : PageController{
         if let cnt = request.getSessionContent(type: FullPageData.self) {
             request.setContent(cnt)
         }
-        request.addPageVar("url", "/ctrl/fullpage/saveContentData/\(contentData.id)")
+        request.addPageString("url", "/ctrl/fullpage/saveContentData/\(contentData.id)")
         setEditPageVars(contentData: contentData, request: request)
-        return ForwardResponse(page: "fullpage/editContentData.ajax", request: request)
+        return ForwardResponse(path: "fullpage/editContentData.ajax", request: request)
     }
 
     override public func setEditPageVars(contentData: ContentData, request: Request) {
         if let pageData = contentData as? FullPageData {
             super.setEditPageVars(contentData: pageData, request: request)
-            request.addPageVar("cssClass", pageData.cssClass.toHtml())
+            request.addPageString("cssClass", pageData.cssClass.toHtml())
         }
     }
     

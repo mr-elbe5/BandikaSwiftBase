@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
 public class FormSelectTag : FormLineTag{
 
     override public class var type: TagType {
-        .spgFormSelect
+        "formselect"
     }
 
     public var onChange = ""
@@ -29,7 +31,7 @@ public class FormSelectTag : FormLineTag{
 
     override public func getPreControlHtml(request: Request) -> String{
         onChange = getStringAttribute("onchange", request)
-        return FormSelectTag.preControlHtml.format(language: request.language, [
+        return FormSelectTag.preControlHtml.replacePlaceholders(language: request.language, [
             "name" : name,
             "onchange" : onChange.isEmpty ? "" : "onchange=\"\(onChange)\""]
         )
@@ -42,11 +44,17 @@ public class FormSelectTag : FormLineTag{
     public static func getOptionHtml(request: Request, value: String, isSelected: Bool, text: String) -> String{
         """
         <option value="{{value}}" {{isSelected}}>{{text}}</option>
-        """.format(language: request.language, [
+        """.replacePlaceholders(language: request.language, [
             "value" : value,
             "isSelected": isSelected ? "selected" : "",
             "text": text
         ])
     }
 
+}
+
+public class FormSelectTagCreator : TagCreator{
+    public func create() -> PageTag{
+        FormSelectTag()
+    }
 }

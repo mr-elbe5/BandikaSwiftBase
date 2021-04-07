@@ -8,16 +8,9 @@
 */
 
 import Foundation
+import SwiftyHttpServer
 
-public class Message {
-
-    public var type: MessageType
-    public var text: String
-
-    public init(type: MessageType, text: String){
-        self.type = type
-        self.text = text
-    }
+extension Message {
 
     public static var messageHtml =
             """
@@ -31,10 +24,9 @@ public class Message {
 
     public func getHtml(request: Request) -> String {
         if request.hasMessage {
-            return Message.messageHtml.format(language: request.language, [
+            return Message.messageHtml.replacePlaceholders(language: request.language, [
                 "type": type.rawValue,
-                "message": text.hasPrefix("_") ? text.toLocalizedHtml(language: request.language) : text.toHtml()]
-            )
+                "message": text.hasPrefix("_") ? text.toLocalizedHtml(language: request.language) : text.toHtml()])
         }
         return ""
     }

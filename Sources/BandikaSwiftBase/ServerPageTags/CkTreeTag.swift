@@ -8,11 +8,13 @@
 */
 
 import Foundation
+import SwiftyStringExtensions
+import SwiftyHttpServer
 
-public class CkTreeTag: ServerPageTag {
+public class CkTreeTag: PageTag {
 
     override public class var type: TagType {
-        .spgCkTree
+        "cktree"
     }
 
     public var type = "image"
@@ -25,12 +27,12 @@ public class CkTreeTag: ServerPageTag {
         html.append("""
                     <section public class="treeSection">
                         <ul public class="tree pagetree">
-                    """.format(language: request.language, nil))
+                    """.replacePlaceholders(language: request.language, nil))
         if Right.hasUserReadRight(user: request.user, contentId: ContentData.ID_ROOT) {
             html.append("""
                             <li public class="open">
                                 <span>{{displayName}}</span>
-                        """.format(language: request.language, ["displayName" : ContentContainer.instance.contentRoot.displayName]))
+                        """.replacePlaceholders(language: request.language, ["displayName" : ContentContainer.instance.contentRoot.displayName]))
             if SystemZone.hasUserSystemRight(user: request.user, zone: .contentEdit) {
                 html.append(getHtml(content: ContentContainer.instance.contentRoot, request: request))
             }
@@ -53,7 +55,7 @@ public class CkTreeTag: ServerPageTag {
         html.append("""
                         <li public class="files open">
                             <span>{{_files}}</span>
-                    """.format(language: request.language, nil))
+                    """.replacePlaceholders(language: request.language, nil))
         // file icons
         if Right.hasUserReadRight(user: request.user, content: content) {
             html.append("""
@@ -65,7 +67,7 @@ public class CkTreeTag: ServerPageTag {
                                    <div public class="treeline">
                                        <span public class="treeImage" id="{{id}}">
                                            {{displayName}}
-                            """.format(language: request.language, [
+                            """.replacePlaceholders(language: request.language, [
                                 "id": String(file.id),
                                 "displayName": file.displayName.toHtml(),
                                 ]))
@@ -74,7 +76,7 @@ public class CkTreeTag: ServerPageTag {
                                         <span public class="hoverImage">
                                             <img src="{{previewUrl}}" alt="{{fileName)}}"/>
                                         </span>
-                                """.format(language: request.language, [
+                                """.replacePlaceholders(language: request.language, [
                                     "fileName": file.fileName.toHtml(),
                                     "previewUrl": file.previewUrl]))
                 }
@@ -86,7 +88,7 @@ public class CkTreeTag: ServerPageTag {
                                        </div>
                                    </div>
                                </li>
-                    """.format(language: request.language, [
+                    """.replacePlaceholders(language: request.language, [
                         "url": file.url.toUri()]))
             }
             html.append("""
@@ -102,7 +104,7 @@ public class CkTreeTag: ServerPageTag {
                 html.append("""
                                 <li public class="open">
                                     <span>{{displayName}}</span>
-                            """.format(language: request.language, ["displayName" : childData.displayName]))
+                            """.replacePlaceholders(language: request.language, ["displayName" : childData.displayName]))
                 if Right.hasUserReadRight(user: request.user, content: childData) {
                     html.append(getHtml(content: childData, request: request))
                 }
@@ -117,4 +119,10 @@ public class CkTreeTag: ServerPageTag {
         return html
     }
 
+}
+
+public class CKTreeTagCreator : TagCreator{
+    public func create() -> PageTag{
+        CkTreeTag()
+    }
 }
