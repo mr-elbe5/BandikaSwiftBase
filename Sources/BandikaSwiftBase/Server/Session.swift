@@ -17,6 +17,9 @@ extension Session{
             if let usr = newValue {
                 setAttribute(Session.USER_KEY, value: usr)
             }
+            else{
+                removeAttribute(Session.USER_KEY)
+            }
         }
     }
 
