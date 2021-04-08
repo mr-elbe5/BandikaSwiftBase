@@ -12,7 +12,7 @@ import SwiftyHttpServer
 
 extension TagFactory{
 
-    static func addBandikaTypes(){
+    public static func addBandikaTypes(){
         addType(type: BreadcrumbTag.type, creator: BreadcrumbTagCreator())
         addType(type: ContentTag.type, creator: ContentTagCreator())
         addType(type: ContentTreeTag.type, creator: ContentTreeTagCreator())
