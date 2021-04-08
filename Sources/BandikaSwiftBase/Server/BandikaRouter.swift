@@ -11,11 +11,18 @@ import Foundation
 import SwiftyHttpServer
 import SwiftyLog
 
+public protocol RouterDelegate{
+    func getShutdownCode() -> String
+    func stopApplication()
+}
+
 public class BandikaRouter : Router {
 
     public static let layoutPrefix = "/layout/"
     public static let filesPrefix = "/files/"
     public static let htmlSuffix = ".html"
+
+    public var delegate : RouterDelegate? = nil
     
     override public func route(_ request: Request) -> Response?{
         let path = rewritePath(requestPath: request.path)
@@ -55,13 +62,13 @@ public class BandikaRouter : Router {
             return StaticFileController.instance.processLayoutPath(path: path, request: request)
         }
         // shutdown request
-        if path.hasPrefix(Router.shutdownPrefix){
+        if path.hasPrefix(Router.shutdownPrefix), let delegate = delegate{
             let pathSegments = path.split("/")
             if pathSegments.count > 1 {
                 let shutdownCode = pathSegments[1]
-                if shutdownCode == HttpServer.instance.shutdownCode {
+                if shutdownCode == delegate.getShutdownCode() {
                     DispatchQueue.global(qos: .userInitiated).async {
-                        HttpServer.instance.stop()
+                        delegate.stopApplication()
                     }
                     return Response(code: .ok)
                 }

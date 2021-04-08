@@ -44,25 +44,29 @@ public class Statics: Codable{
         case defaultPassword
         case defaultLocale
         case cleanupInterval
+        case shutdownCode
     }
     
     public var salt: String
     public var defaultPassword: String
     public var defaultLocale: Locale
     public var cleanupInterval : Int = 10
+    public var shutdownCode : String
 
     public required init(){
         salt = ""
         defaultPassword = ""
         defaultLocale = Locale(identifier: "en")
+        shutdownCode = ""
     }
     
     public required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: SectionDataCodingKeys.self)
-        salt = try values.decodeIfPresent(String.self, forKey: .salt) ?? UserSecurity.generateSaltString()
+        salt = try values.decodeIfPresent(String.self, forKey: .salt) ?? Statics.generateSaltString()
         defaultPassword = try values.decodeIfPresent(String.self, forKey: .defaultPassword) ?? ""
         defaultLocale = try values.decodeIfPresent(Locale.self, forKey: .defaultLocale) ?? Locale.init(identifier: "en")
         cleanupInterval = try values.decodeIfPresent(Int.self, forKey: .cleanupInterval) ?? 10
+        shutdownCode = try values.decodeIfPresent(String.self, forKey: .shutdownCode) ?? Statics.generateShutdownCode()
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -70,12 +74,14 @@ public class Statics: Codable{
         try container.encode(salt, forKey: .salt)
         try container.encode(defaultPassword, forKey: .defaultPassword)
         try container.encode(defaultLocale, forKey: .defaultLocale)
+        try container.encode(shutdownCode, forKey: .shutdownCode)
     }
     
     public func initDefaults(){
-        salt = UserSecurity.generateSaltString()
+        salt = Statics.generateSaltString()
         defaultPassword =  UserSecurity.encryptPassword(password: "pass", salt: salt)
         defaultLocale = Locale(identifier: "en")
+        shutdownCode = Statics.generateShutdownCode()
     }
     
     public func save() -> Bool{
@@ -86,6 +92,22 @@ public class Statics: Codable{
             return false
         }
         return true
+    }
+
+    private static func generateSalt() -> [UInt8] {
+        var bytes = [UInt8](repeating: 0, count: 8)
+        _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
+        return bytes
+    }
+
+    private static func generateSaltString() -> String {
+        Data(bytes: generateSalt(), count: 8).base64EncodedString()
+    }
+
+    private static func generateShutdownCode() -> String {
+        var bytes = [UInt8](repeating: 0, count: 8)
+        _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
+        return Data(bytes: bytes, count: 8).base64EncodedString()
     }
     
 }

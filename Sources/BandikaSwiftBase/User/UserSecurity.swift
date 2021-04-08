@@ -8,7 +8,6 @@
 */
 
 import Foundation
-import CryptoKit
 import CommonCrypto
 
 public class UserSecurity{
@@ -33,25 +32,5 @@ public class UserSecurity{
         }
         return Data(outputBytes).base64EncodedString()
     }
-    
-    public static func generateSalt() -> [UInt8] {
-        var bytes = [UInt8](repeating: 0, count: 8)
-        _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
-        return bytes
-    }
-    
-    public static func generateSaltString() -> String {
-        Data(bytes: generateSalt(), count: 8).base64EncodedString()
-    }
 
-    public static func generateShutdown() -> [UInt8] {
-        var bytes = [UInt8](repeating: 0, count: 8)
-        _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
-        return bytes
-    }
-
-    public static func generateShutdownString() -> String {
-        Data(bytes: generateShutdown(), count: 8).base64EncodedString()
-    }
-    
 }
