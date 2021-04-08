@@ -11,7 +11,7 @@ import Foundation
 import SwiftyHttpServer
 import SwiftyLog
 
-public class UserController: Controller {
+public class UserController: TypedController {
 
     public static var instance = UserController()
 

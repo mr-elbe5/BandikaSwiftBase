@@ -11,7 +11,7 @@ import Foundation
 import SwiftyHttpServer
 import SwiftyLog
 
-public class ContentController: Controller {
+public class ContentController: TypedController {
 
     override public func processRequest(method: String, id: Int?, request: Request) -> Response? {
         switch method {

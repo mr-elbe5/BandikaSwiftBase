@@ -10,7 +10,7 @@
 import Foundation
 import SwiftyHttpServer
 
-public class TemplateController: Controller {
+public class TemplateController: TypedController {
 
     public static var instance = TemplateController()
 

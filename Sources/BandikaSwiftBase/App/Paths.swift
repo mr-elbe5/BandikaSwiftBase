@@ -67,6 +67,7 @@ public struct Paths{
         Log.info("layout directory is \(layoutDirectory)")
         Log.info("resource directory is \(resourceDirectory)")
         Log.info("web directory is \(webDirectory)")
+        Log.info("server page directory is \(serverPagesDirectory)")
     }
 
     public static func assertDirectories(){

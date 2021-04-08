@@ -10,7 +10,7 @@
 import Foundation
 import SwiftyHttpServer
 
-public class CkEditorController: Controller {
+public class CkEditorController: TypedController {
 
     public static var instance = CkEditorController()
 

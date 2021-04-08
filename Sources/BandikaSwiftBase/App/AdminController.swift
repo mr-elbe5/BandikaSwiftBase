@@ -10,7 +10,7 @@
 import Foundation
 import SwiftyHttpServer
 
-public class AdminController: Controller {
+public class AdminController: TypedController {
 
     public static var instance = AdminController()
 

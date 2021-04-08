@@ -10,7 +10,7 @@ import Foundation
 import SwiftyHttpServer
 import SwiftyLog
 
-public class FileController: Controller {
+public class FileController: TypedController {
 
     public static var instance = FileController()
 

@@ -11,7 +11,7 @@ import Foundation
 import SwiftyHttpServer
 import SwiftyLog
 
-public class GroupController: Controller {
+public class GroupController: TypedController {
 
     public static var instance = GroupController()
 
