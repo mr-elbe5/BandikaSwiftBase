@@ -62,7 +62,7 @@ public class FullPageData: PageData {
 
     override public func createPublishedContent(request: Request) {
         publishedContent = HtmlFormatter.format(src: """
-                               <div public class="{{cssClass}}">
+                               <div class="{{cssClass}}">
                                    {{content}}
                                </div>
                            """.replacePlaceholders(language: request.language, [

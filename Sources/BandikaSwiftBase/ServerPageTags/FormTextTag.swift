@@ -24,7 +24,7 @@ public class FormTextTag : FormLineTag{
         value = getStringAttribute("value", request)
         maxLength = getIntAttribute("maxLength", request, def: 0)
         return """
-               <input type="text" id="{{name}}" name="{{name}}" public class="form-control" value="{{value}}" {{maxLength}} />
+               <input type="text" id="{{name}}" name="{{name}}" class="form-control" value="{{value}}" {{maxLength}} />
                """.replacePlaceholders(language: request.language, [
                     "name" : name,
                     "value" : value,

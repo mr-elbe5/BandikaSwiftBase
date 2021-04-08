@@ -77,23 +77,23 @@ public class PageData: ContentData {
         var html = ""
         switch request.viewType {
         case .edit:
-            html.append("<div id=\"pageContent\" public class=\"editArea\">")
+            html.append("<div id=\"pageContent\" class=\"editArea\">")
             html.append(displayEditContent(request: request))
             html.append("</div>")
         case .showPublished:
-            html.append("<div id=\"pageContent\" public class=\"viewArea\">");
+            html.append("<div id=\"pageContent\" class=\"viewArea\">");
             if isPublished() {
                 html.append(displayPublishedContent(request: request))
             }
             html.append("</div>")
         case .showDraft:
-            html.append("<div id=\"pageContent\" public class=\"viewArea\">");
+            html.append("<div id=\"pageContent\" class=\"viewArea\">");
             if Right.hasUserEditRight(user: request.user, contentId: id) {
                 html.append(displayDraftContent(request: request))
             }
             html.append("</div>")
         case .show:
-            html.append("<div id=\"pageContent\" public class=\"viewArea\">")
+            html.append("<div id=\"pageContent\" class=\"viewArea\">")
             if Right.hasUserReadRight(user: request.user, contentId: id) {
                 //Log.log("display draft");
                 html.append(displayDraftContent(request: request))

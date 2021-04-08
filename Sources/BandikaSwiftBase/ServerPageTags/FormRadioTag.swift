@@ -21,7 +21,7 @@ public class FormRadioTag: FormCheckTag {
             """
             <span>
                 <input type="radio" name="{{name}}" value="{{value}}" {{checked}}/>
-                <label public class="form-check-label">
+                <label class="form-check-label">
             """
 
     override public func getPreHtml() -> String {

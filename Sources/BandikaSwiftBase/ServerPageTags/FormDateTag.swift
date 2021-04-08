@@ -21,8 +21,8 @@ public class FormDateTag: FormLineTag {
         var html = ""
         let value = getStringAttribute("value", request)
         html.append("""
-                    <div public class="input-group date">
-                        <input type="text" id="{{name}}" name="{{name}}" public class="form-control datepicker" value="{{value}}" />
+                    <div class="input-group date">
+                        <input type="text" id="{{name}}" name="{{name}}" class="form-control datepicker" value="{{value}}" />
                     </div>
                     <script type="text/javascript">$('#{{name}}').datepicker({language: '{{language}}'});</script>
                     """.replacePlaceholders(language: request.language, [

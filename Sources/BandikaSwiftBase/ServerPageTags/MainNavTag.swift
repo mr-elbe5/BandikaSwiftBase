@@ -20,17 +20,17 @@ public class MainNavTag: PageTag {
     override public func getHtml(request: Request) -> String {
         var html = ""
         html.append("""
-                        <section public class="col-12 menu">
-                            <nav public class="navbar navbar-expand-lg navbar-light">
-                                <a public class="navbar-brand" href="/"><img src="/layout/logo.png"
+                        <section class="col-12 menu">
+                            <nav class="navbar navbar-expand-lg navbar-light">
+                                <a class="navbar-brand" href="/"><img src="/layout/logo.png"
                                                                       alt="{{appName}}"/></a>
-                                <button public class="navbar-toggler" type="button" data-toggle="collapse"
+                                <button class="navbar-toggler" type="button" data-toggle="collapse"
                                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                         aria-expanded="false" aria-label="Toggle navigation">
-                                    <span public class="fa fa-bars"></span>
+                                    <span class="fa fa-bars"></span>
                                 </button>
-                                <div public class="collapse navbar-collapse" id="navbarSupportedContent">
-                                    <ul public class="navbar-nav mr-auto">
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav mr-auto">
                     """.replacePlaceholders(language: request.language, [
                         "appName": Configuration.instance.applicationName.toHtml()]
         ))
@@ -48,13 +48,13 @@ public class MainNavTag: PageTag {
                 }
                 if !children.isEmpty {
                     html.append("""
-                                        <li public class="nav-item dropdown">
-                                            <a public class="nav-link {{active}} dropdown-toggle"
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link {{active}} dropdown-toggle"
                                                data-toggle="dropdown" href="{{url}}" role="button"
                                                aria-haspopup="true" aria-expanded="false">{{displayName}}
                                             </a>
-                                            <div public class="dropdown-menu">
-                                                <a public class="dropdown-item {{active}}"
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item {{active}}"
                                                    href="{{url}}">{{displayName}}
                                                 </a>
                                 """.replacePlaceholders(language: request.language, [
@@ -64,7 +64,7 @@ public class MainNavTag: PageTag {
                     ))
                     for child in children {
                         html.append("""
-                                                <a public class="dropdown-item {{active}}"
+                                                <a class="dropdown-item {{active}}"
                                                    href="{{url}}">{{displayName}}
                                                 </a>
                                     """.replacePlaceholders(language: request.language, [
@@ -79,8 +79,8 @@ public class MainNavTag: PageTag {
                                 """)
                 } else {
                     html.append("""
-                                        <li public class="nav-item">
-                                            <a public class="nav-link {{active}}}"
+                                        <li class="nav-item">
+                                            <a class="nav-link {{active}}}"
                                                href="{{url}}">{{displayName}}
                                             </a>
                                         </li>

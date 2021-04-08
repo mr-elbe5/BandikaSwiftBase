@@ -22,13 +22,13 @@ public class BreadcrumbTag: PageTag {
         let content = request.getSafeContent()
         let parentIds = ContentContainer.instance.collectParentIds(contentId: content.id)
         html.append("""
-                        <section public class="col-12">
-                            <ol public class="breadcrumb">
+                        <section class="col-12">
+                            <ol class="breadcrumb">
                     """)
         for i in (0..<parentIds.count).reversed() {
             if let content = ContentContainer.instance.getContent(id: parentIds[i]) {
                 html.append("""
-                                <li public class="breadcrumb-item">
+                                <li class="breadcrumb-item">
                                     <a href="{{url}}">{{displayName}}
                                     </a>
                                 </li>
@@ -38,7 +38,7 @@ public class BreadcrumbTag: PageTag {
             }
         }
         html.append("""
-                                <li public class="breadcrumb-item">
+                                <li class="breadcrumb-item">
                                     <a>{{displayName}}
                                     </a>
                                 </li>

@@ -38,15 +38,15 @@ public class FormLineTag: PageTag {
 
     override public func getStartHtml(request: Request) -> String {
         var html = ""
-        html.append("<div public class=\"form-group row")
+        html.append("<div class=\"form-group row")
         if request.hasFormErrorField(name) {
             html.append(" error")
         }
         html.append("\">\n")
         if label.isEmpty {
-            html.append("<div public class=\"col-md-3\"></div>")
+            html.append("<div class=\"col-md-3\"></div>")
         } else {
-            html.append("<label public class=\"col-md-3 col-form-label\"")
+            html.append("<label class=\"col-md-3 col-form-label\"")
             if !name.isEmpty {
                 html.append(" for=\"")
                 html.append(name.toHtml())
@@ -59,7 +59,7 @@ public class FormLineTag: PageTag {
             }
             html.append("</label>\n")
         }
-        html.append("<div public class=\"col-md-9")
+        html.append("<div class=\"col-md-9")
         if padded {
             html.append(" padded")
         }

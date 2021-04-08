@@ -37,7 +37,7 @@ public class FormEditorTag : FormLineTag{
     override public func getPostControlHtml(request: Request) -> String{
         """
                 </textarea>
-                <small id="{{name}}Hint" public class="form-text text-muted">{{hint}}</small>
+                <small id="{{name}}Hint" class="form-text text-muted">{{hint}}</small>
         """.replacePlaceholders(language: request.language, [
                 "name" : name,
                 "hint" : hint.hasPrefix("_") ? hint.toLocalizedHtml(language: request.language) : hint.toHtml()]

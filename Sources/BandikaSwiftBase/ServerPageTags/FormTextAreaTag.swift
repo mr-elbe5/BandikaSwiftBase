@@ -24,7 +24,7 @@ public class FormTextAreaTag: FormLineTag {
         height = getStringAttribute( "height", request)
         value = getStringAttribute("value", request)
         return """
-               <textarea id="{{name}}" name="{{name}}" public class="form-control" {{value}}>
+               <textarea id="{{name}}" name="{{name}}" class="form-control" {{value}}>
                """.replacePlaceholders(language: request.language, [
                     "name": name,
                     "height": height.isEmpty ? "" : "style=\"height:\(height)\"",

@@ -20,7 +20,7 @@ public class FormFileTag: FormLineTag {
     override public func getPreControlHtml(request: Request) -> String {
         let multiple = getBoolAttribute("multiple", request)
         return """
-               <input type="file" public class="form-control-file" id="{{name}}" name="{{name}}" {{multiple}}>
+               <input type="file" class="form-control-file" id="{{name}}" name="{{name}}" {{multiple}}>
                """.replacePlaceholders(language: request.language, [
                     "name": name,
                     "multiple": multiple ? "multiple" : ""])

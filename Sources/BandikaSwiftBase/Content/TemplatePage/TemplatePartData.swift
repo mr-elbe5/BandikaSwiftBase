@@ -113,7 +113,7 @@ public class TemplatePartData: PartData {
             request.setPart(self)
             if request.viewType == ViewType.edit {
                 html.append("""
-                            <div id="{{wrapperId}}" public class="partWrapper {{css}}" title="{{title}}">
+                            <div id="{{wrapperId}}" class="partWrapper {{css}}" title="{{title}}">
                             """.replacePlaceholders(language: request.language, [
                     "wrapperId": partWrapperId,
                     "css": partTemplate.css.toHtml(),
@@ -121,7 +121,7 @@ public class TemplatePartData: PartData {
                 html.append(getEditPartHeader(request: request))
             } else {
                 html.append("""
-                            <div id="{{wrapperId}}" public class="partWrapper {{css}}">
+                            <div id="{{wrapperId}}" class="partWrapper {{css}}">
                             """.replacePlaceholders(language: request.language, [
                     "wrapperId": partWrapperId,
                     "css": partTemplate.css.toHtml()]))

@@ -20,13 +20,13 @@ public class ContentTreeTag: PageTag {
     override public func getHtml(request: Request) -> String {
         var html = ""
         html.append("""
-                    <section public class="treeSection">
+                    <section class="treeSection">
                         <div><a href="/ctrl/admin/clearClipboard">{{_clearClipboard}}</a></div>
-                        <ul public class="tree pagetree">
+                        <ul class="tree pagetree">
                     """.replacePlaceholders(language: request.language, nil))
         if Right.hasUserReadRight(user: request.user, contentId: ContentData.ID_ROOT) {
             html.append("""
-                            <li public class="open">
+                            <li class="open">
                                 <span>{{displayName}}</span>
                         """.replacePlaceholders(language: request.language, ["displayName" : ContentContainer.instance.contentRoot.displayName]))
             if SystemZone.hasUserSystemRight(user: request.user, zone: .contentEdit) {
@@ -62,10 +62,10 @@ public class ContentTreeTag: PageTag {
             // show, edit, rights
             html.append(
                     """
-                    <div public class="icons">
-                       <a public class="icon fa fa-eye" href="" onclick="return linkTo('/ctrl/{{type}}/show/{{id}}');" title="{{_view}}"> </a>
-                       <a public class="icon fa fa-pencil" href="" onclick="return openModalDialog('/ajax/{{type}}/openEditContentData/{{id}}');" title="{{_edit}}"> </a>
-                       <a public class="icon fa fa-key" href="" onclick="return openModalDialog('/ajax/{{type}}/openEditRights/{{id}}');" title="{{_rights}}"> </a>             
+                    <div class="icons">
+                       <a class="icon fa fa-eye" href="" onclick="return linkTo('/ctrl/{{type}}/show/{{id}}');" title="{{_view}}"> </a>
+                       <a class="icon fa fa-pencil" href="" onclick="return openModalDialog('/ajax/{{type}}/openEditContentData/{{id}}');" title="{{_edit}}"> </a>
+                       <a class="icon fa fa-key" href="" onclick="return openModalDialog('/ajax/{{type}}/openEditRights/{{id}}');" title="{{_rights}}"> </a>             
                     """.replacePlaceholders(language: request.language, params))
             // cut, copy
             if content.id != ContentData.ID_ROOT {
@@ -120,23 +120,23 @@ public class ContentTreeTag: PageTag {
                     <ul>
                     """)
         html.append("""
-                        <li public class="files open">
+                        <li class="files open">
                             <span>{{_files}}</span>
                     """.replacePlaceholders(language: request.language, nil))
         // file icons
         if Right.hasUserEditRight(user: request.user, content: content) {
             html.append("""
-                            <div public class="icons">
+                            <div class="icons">
                         """)
             // paste
             if Clipboard.instance.hasData(type: .file) {
                 html.append("""
-                                <a public class="icon fa fa-paste" href="/ctrl/file/pasteFile?parentId={{id}}&parentVersion={{version}}" title="{{_pasteFile}}"> </a>
+                                <a class="icon fa fa-paste" href="/ctrl/file/pasteFile?parentId={{id}}&parentVersion={{version}}" title="{{_pasteFile}}"> </a>
                             """.replacePlaceholders(language: request.language, params))
             }
             // new file
             html.append("""
-                                <a public class="icon fa fa-plus" onclick="return openModalDialog('/ajax/file/openCreateFile?parentId={{id}}');" title="{{_newFile}}">
+                                <a class="icon fa fa-plus" onclick="return openModalDialog('/ajax/file/openCreateFile?parentId={{id}}');" title="{{_newFile}}">
                                 </a>
                             </div>
                         """.replacePlaceholders(language: request.language, params))
@@ -154,13 +154,13 @@ public class ContentTreeTag: PageTag {
                     "previewUrl": file.previewUrl]
                 html.append("""
                                <li>
-                                   <div public class="treeline">
-                                       <span public class="treeImage" id="{{id}}">
+                                   <div class="treeline">
+                                       <span class="treeImage" id="{{id}}">
                                            {{displayName}}
                             """.replacePlaceholders(language: request.language, fileParams))
                 if file.isImage {
                     html.append("""
-                                           <span public class="hoverImage">
+                                           <span class="hoverImage">
                                                 <img src="{{previewUrl}}" alt="{{fileName)}}"/>
                                             </span>
                                 """.replacePlaceholders(language: request.language, fileParams))
@@ -168,13 +168,13 @@ public class ContentTreeTag: PageTag {
                 // single file icons
                 html.append("""
                                        </span>
-                                       <div public class="icons">
-                                           <a public class="icon fa fa-eye" href="{{url}}" target="_blank" title="{{_view}}"> </a>
-                                           <a public class="icon fa fa-download" href="{{url}}?download=true" title="{{_download}}"> </a>
-                                           <a public class="icon fa fa-pencil" href="" onclick="return openModalDialog('/ajax/file/openEditFile/{{id}}');" title="{{_edit}}"> </a>
-                                           <a public class="icon fa fa-scissors" href="" onclick="return linkTo('/ctrl/file/cutFile/{{id}}');" title="{{_cut}}"> </a>
-                                           <a public class="icon fa fa-copy" href="" onclick="return linkTo('/ctrl/file/copyFile/{{id}}');" title="{{_copy}}"> </a>
-                                           <a public class="icon fa fa-trash-o" href="" onclick="if (confirmDelete()) return linkTo('/ctrl/file/deleteFile/{{id}}');" title="{{_delete}}"> </a>
+                                       <div class="icons">
+                                           <a class="icon fa fa-eye" href="{{url}}" target="_blank" title="{{_view}}"> </a>
+                                           <a class="icon fa fa-download" href="{{url}}?download=true" title="{{_download}}"> </a>
+                                           <a class="icon fa fa-pencil" href="" onclick="return openModalDialog('/ajax/file/openEditFile/{{id}}');" title="{{_edit}}"> </a>
+                                           <a class="icon fa fa-scissors" href="" onclick="return linkTo('/ctrl/file/cutFile/{{id}}');" title="{{_cut}}"> </a>
+                                           <a class="icon fa fa-copy" href="" onclick="return linkTo('/ctrl/file/copyFile/{{id}}');" title="{{_copy}}"> </a>
+                                           <a class="icon fa fa-trash-o" href="" onclick="if (confirmDelete()) return linkTo('/ctrl/file/deleteFile/{{id}}');" title="{{_delete}}"> </a>
                                        </div>
                                    </div>
                                </li>
@@ -191,7 +191,7 @@ public class ContentTreeTag: PageTag {
         if !content.children.isEmpty {
             for childData in content.children {
                 html.append("""
-                                <li public class="open">
+                                <li class="open">
                                     <span>{{displayName}}</span>
                             """.replacePlaceholders(language: request.language, ["displayName" : childData.displayName]))
                 if Right.hasUserReadRight(user: request.user, content: childData) {

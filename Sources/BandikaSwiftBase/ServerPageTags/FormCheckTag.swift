@@ -25,7 +25,7 @@ public class FormCheckTag: PageTag {
             """
             <span>
                 <input type="checkbox" name="{{name}}" value="{{value}}" {{checked}}/>
-                <label public class="form-check-label">
+                <label class="form-check-label">
             """
 
     public func getPreHtml() -> String{

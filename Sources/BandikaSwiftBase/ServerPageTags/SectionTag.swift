@@ -41,11 +41,11 @@ public class SectionTag: PageTag {
     private func getEditSectionHtml(section: SectionData, page: TemplatePageData, request: Request) -> String {
         var html = ""
         html.append("""
-                    <div public class="section {{css}}" id="{{id}}" title="Section {{name}}">
-                        <div public class="addPartButtons">
-                            <div public class="btn-group btn-group-sm editheader">
-                                <button public class="btn  btn-primary dropdown-toggle fa fa-plus" data-toggle="dropdown"  title="{{newPart}}"></button>
-                                <div public class="dropdown-menu">
+                    <div class="section {{css}}" id="{{id}}" title="Section {{name}}">
+                        <div class="addPartButtons">
+                            <div class="btn-group btn-group-sm editheader">
+                                <button class="btn  btn-primary dropdown-toggle fa fa-plus" data-toggle="dropdown"  title="{{newPart}}"></button>
+                                <div class="dropdown-menu">
                     """.replacePlaceholders(language: request.language, [
             "css": section.cssClass,
             "id": String(section.sectionId),
@@ -54,7 +54,7 @@ public class SectionTag: PageTag {
         if let list = TemplateCache.getTemplates(type: TemplateType.part) {
             for template in list.values {
                 html.append("""
-                                <a public class="dropdown-item" href="" onclick="return addPart(-1,'{{sectionName}}','{{partType}}','{{templateName}}');">
+                                <a class="dropdown-item" href="" onclick="return addPart(-1,'{{sectionName}}','{{partType}}','{{templateName}}');">
                                     {{templateDisplayName}}
                                 </a>
                             """.replacePlaceholders(language: request.language, [
@@ -82,7 +82,7 @@ public class SectionTag: PageTag {
     private func getSectionHtml(section: SectionData, request: Request) -> String {
         var html = ""
         html.append("""
-                    <div public class="section {{css}}">
+                    <div class="section {{css}}">
                     """.replacePlaceholders(language: request.language, [
                         "css": section.cssClass]
         ))

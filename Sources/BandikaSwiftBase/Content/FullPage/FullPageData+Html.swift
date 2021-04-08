@@ -16,12 +16,12 @@ extension FullPageData{
     public func getEditContentHtml(request: Request) -> String {
         """
         <form action="/ctrl/{{type}}/savePage/{{id}}" method="post" id="pageform" name="pageform" accept-charset="UTF-8">
-            <div public class="btn-group btn-group-sm pageEditButtons">
-              <button type="submit" public class="btn btn-sm btn-success" onclick="updateEditor();">{{_savePage}}</button>
-              <button public class="btn btn-sm btn-secondary" onclick="return linkTo('/ctrl/{{type}}/cancelEditPage/{{id}}');">{{_cancel}}</button>
+            <div class="btn-group btn-group-sm pageEditButtons">
+              <button type="submit" class="btn btn-sm btn-success" onclick="updateEditor();">{{_savePage}}</button>
+              <button class="btn btn-sm btn-secondary" onclick="return linkTo('/ctrl/{{type}}/cancelEditPage/{{id}}');">{{_cancel}}</button>
             </div>
-            <div public class="{{css}}">
-              <div public class="ckeditField" id="content" contenteditable="true">{{content}}</div>
+            <div class="{{css}}">
+              <div class="ckeditField" id="content" contenteditable="true">{{content}}</div>
             </div>
             <input type="hidden" name="content" value="{{escapedContent}}" />
         </form>
@@ -44,7 +44,7 @@ extension FullPageData{
 
     public func getDraftContentHtml(request: Request) -> String {
         """
-            <div public class="{{css}}">
+            <div class="{{css}}">
                 {{content}}
             </div>
         """.replacePlaceholders(language: request.language, [

@@ -22,11 +22,11 @@ public class GroupListTag: PageTag {
         let groupId = request.getInt("groupId")
         for group in UserContainer.instance.groups {
             html.append("""
-                        <li public class="{{groupOpen}}">
+                        <li class="{{groupOpen}}">
                             <span>{{groupName}}&nbsp;({{groupId}})</span>
-                            <div public class="icons">
-                                <a public class="icon fa fa-pencil" href="" onclick="return openModalDialog('/ajax/group/openEditGroup/{{groupId}}');" title="{{_edit}}"> </a>
-                                <a public class="icon fa fa-trash-o" href="" onclick="if (confirmDelete()) return linkTo('/ctrl/group/deleteGroup/{{groupId}}?version={{groupVersion}}');" title="{{_delete}}"> </a>
+                            <div class="icons">
+                                <a class="icon fa fa-pencil" href="" onclick="return openModalDialog('/ajax/group/openEditGroup/{{groupId}}');" title="{{_edit}}"> </a>
+                                <a class="icon fa fa-trash-o" href="" onclick="if (confirmDelete()) return linkTo('/ctrl/group/deleteGroup/{{groupId}}?version={{groupVersion}}');" title="{{_delete}}"> </a>
                             </div>
                         </li>
                         """.replacePlaceholders(language: request.language, [

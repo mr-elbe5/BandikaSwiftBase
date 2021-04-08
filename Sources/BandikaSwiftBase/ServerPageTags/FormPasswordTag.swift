@@ -19,7 +19,7 @@ public class FormPasswordTag : FormLineTag{
 
     override public func getPreControlHtml(request: Request) -> String{
         """
-        <input type="password" id="{{name}}" name="{{name}}" public class="form-control" />
+        <input type="password" id="{{name}}" name="{{name}}" class="form-control" />
         """.replacePlaceholders(language: request.language, [
             "name" : name]
         )

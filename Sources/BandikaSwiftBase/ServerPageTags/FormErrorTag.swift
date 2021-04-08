@@ -20,7 +20,7 @@ public class FormErrorTag: PageTag {
     override public func getHtml(request: Request) -> String {
         var html = ""
         if request.hasFormError {
-            html.append("<div public class=\"formError\">\n")
+            html.append("<div class=\"formError\">\n")
             html.append(request.getFormError(create: false).getFormErrorString().toHtmlMultiline())
             html.append("</div>")
         }

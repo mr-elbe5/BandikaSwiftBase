@@ -25,7 +25,7 @@ public class HtmlFieldTag: PageTag {
             let field = partData.ensureHtmlField(name: tagName)
             if request.viewType == ViewType.edit {
                 html.append("""
-                            <div public class="ckeditField" id="{{identifier}}" contenteditable="true">{{content}}</div>
+                            <div class="ckeditField" id="{{identifier}}" contenteditable="true">{{content}}</div>
                                   <input type="hidden" name="{{identifier}}" value="{{fieldContent}}" />
                                   <script type="text/javascript">
                                         $('#{{identifier}}').ckeditor({

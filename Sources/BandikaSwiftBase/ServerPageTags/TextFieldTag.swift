@@ -28,14 +28,14 @@ public class TextFieldTag: PageTag {
                     let rows = Int(attributes["rows"] ?? "1") ?? 1
                     if (rows > 1) {
                         html.append("""
-                                   <textarea public class="editField" name="{{identifier}}" rows="{{rows}}">{{content}}</textarea>
+                                   <textarea class="editField" name="{{identifier}}" rows="{{rows}}">{{content}}</textarea>
                                    """.replacePlaceholders(language: request.language, [
                                     "identifier": field.identifier.toHtml(),
                                     "rows": String(rows),
                                     "content": (field.content.isEmpty ? text : field.content).toHtml()]))
                     } else {
                         html.append("""
-                                    <input type="text" public class="editField" name="{{identifier}}" placeholder="{{identifier}}" value="{{content}}" />
+                                    <input type="text" class="editField" name="{{identifier}}" placeholder="{{identifier}}" value="{{content}}" />
                                     """.replacePlaceholders(language: request.language, [
                                         "identifier": field.identifier.toHtml(),
                                         "content": (field.content.isEmpty ? text : field.content).toHtml()]))

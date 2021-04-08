@@ -16,12 +16,12 @@ extension PartData {
         var html = ""
         let partId = id
         html.append("""
-                                <input type="hidden" name="{{positionName}}" value="{{value}}" public class="partPos"/>
-                                <div public class="partEditButtons">
-                                    <div public class="btn-group btn-group-sm" role="group">
-                                        <div public class="btn-group btn-group-sm" role="group">
-                                            <button type="button" public class="btn btn-secondary fa fa-plus dropdown-toggle" data-toggle="dropdown" title="{{title}}"></button>
-                                            <div public class="dropdown-menu">
+                                <input type="hidden" name="{{positionName}}" value="{{value}}" class="partPos"/>
+                                <div class="partEditButtons">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="button" class="btn btn-secondary fa fa-plus dropdown-toggle" data-toggle="dropdown" title="{{title}}"></button>
+                                            <div class="dropdown-menu">
                     """.replacePlaceholders(language: request.language, [
             "positionName": partPositionName,
             "value": String(position),
@@ -29,7 +29,7 @@ extension PartData {
         if let templates = TemplateCache.getTemplates(type: TemplateType.part) {
             for tpl in templates.values {
                 html.append("""
-                                                        <a public class="dropdown-item" href="" onclick="return addPart({{partId}},'{{sectionName}}','{{partType}}','{{templateName}}');">
+                                                        <a class="dropdown-item" href="" onclick="return addPart({{partId}},'{{sectionName}}','{{partType}}','{{templateName}}');">
                                                              {{displayName}}
                                                         </a>
                             """.replacePlaceholders(language: request.language, [
@@ -44,14 +44,14 @@ extension PartData {
                                 
                                             </div>
                                         </div>
-                                        <div public class="btn-group btn-group-sm" role="group">
-                                            <button type="button" public class="btn  btn-secondary dropdown-toggle fa fa-ellipsis-h" data-toggle="dropdown" title="{{_more}}"></button>
-                                            <div public class="dropdown-menu">
-                                                <a public class="dropdown-item" href="" onclick="return movePart({{partId}},-1);">{{_up}}
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="button" class="btn  btn-secondary dropdown-toggle fa fa-ellipsis-h" data-toggle="dropdown" title="{{_more}}"></button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="" onclick="return movePart({{partId}},-1);">{{_up}}
                                                 </a>
-                                                <a public class="dropdown-item" href="" onclick="return movePart({{partId}},1);">{{_down}}
+                                                <a class="dropdown-item" href="" onclick="return movePart({{partId}},1);">{{_down}}
                                                 </a>
-                                                <a public class="dropdown-item" href="" onclick="if (confirmDelete()) return deletePart({{partId}});">{{_delete}}
+                                                <a class="dropdown-item" href="" onclick="if (confirmDelete()) return deletePart({{partId}});">{{_delete}}
                                                 </a>
                                             </div>
                                         </div>

@@ -21,7 +21,7 @@ public class FormSelectTag : FormLineTag{
 
     public static let preControlHtml =
             """
-            <select id="{{name}}" name="{{name}}" public class="form-control" {{onchange}}>
+            <select id="{{name}}" name="{{name}}" class="form-control" {{onchange}}>
             """
 
     public static let postControlHtml =

@@ -25,12 +25,12 @@ public class CkTreeTag: PageTag {
         type = getStringAttribute("type", request, def: "image")
         callBackNum = request.getInt("CKEditorpublic funcNum", def: -1)
         html.append("""
-                    <section public class="treeSection">
-                        <ul public class="tree pagetree">
+                    <section class="treeSection">
+                        <ul class="tree pagetree">
                     """.replacePlaceholders(language: request.language, nil))
         if Right.hasUserReadRight(user: request.user, contentId: ContentData.ID_ROOT) {
             html.append("""
-                            <li public class="open">
+                            <li class="open">
                                 <span>{{displayName}}</span>
                         """.replacePlaceholders(language: request.language, ["displayName" : ContentContainer.instance.contentRoot.displayName]))
             if SystemZone.hasUserSystemRight(user: request.user, zone: .contentEdit) {
@@ -53,7 +53,7 @@ public class CkTreeTag: PageTag {
                     <ul>
                     """)
         html.append("""
-                        <li public class="files open">
+                        <li class="files open">
                             <span>{{_files}}</span>
                     """.replacePlaceholders(language: request.language, nil))
         // file icons
@@ -64,8 +64,8 @@ public class CkTreeTag: PageTag {
             for file in content.files {
                 html.append("""
                                <li>
-                                   <div public class="treeline">
-                                       <span public class="treeImage" id="{{id}}">
+                                   <div class="treeline">
+                                       <span class="treeImage" id="{{id}}">
                                            {{displayName}}
                             """.replacePlaceholders(language: request.language, [
                                 "id": String(file.id),
@@ -73,7 +73,7 @@ public class CkTreeTag: PageTag {
                                 ]))
                 if file.isImage {
                     html.append("""
-                                        <span public class="hoverImage">
+                                        <span class="hoverImage">
                                             <img src="{{previewUrl}}" alt="{{fileName)}}"/>
                                         </span>
                                 """.replacePlaceholders(language: request.language, [
@@ -83,8 +83,8 @@ public class CkTreeTag: PageTag {
                 // single file icons
                 html.append("""
                                        </span>
-                                       <div public class="icons">
-                                           <a public class="icon fa fa-check-square-o" href="" onclick="return ckCallback('{{url}}')" title="{{_select}}"> </a>
+                                       <div class="icons">
+                                           <a class="icon fa fa-check-square-o" href="" onclick="return ckCallback('{{url}}')" title="{{_select}}"> </a>
                                        </div>
                                    </div>
                                </li>
@@ -102,7 +102,7 @@ public class CkTreeTag: PageTag {
         if !content.children.isEmpty {
             for childData in content.children {
                 html.append("""
-                                <li public class="open">
+                                <li class="open">
                                     <span>{{displayName}}</span>
                             """.replacePlaceholders(language: request.language, ["displayName" : childData.displayName]))
                 if Right.hasUserReadRight(user: request.user, content: childData) {

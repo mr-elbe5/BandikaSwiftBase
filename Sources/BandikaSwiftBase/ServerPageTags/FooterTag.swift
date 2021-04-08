@@ -20,9 +20,9 @@ public class FooterTag: PageTag {
     override public func getHtml(request: Request) -> String {
         var html = ""
         html.append("""
-                        <ul public class="nav">
-                            <li public class="nav-item">
-                                <a public class="nav-link">&copy; {{copyRight}}
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link">&copy; {{copyRight}}
                                 </a>
                             </li>
                     """.replacePlaceholders(language: request.language, [
@@ -31,8 +31,8 @@ public class FooterTag: PageTag {
         for child in ContentContainer.instance.contentRoot.children {
             if child.navType == ContentData.NAV_TYPE_FOOTER && Right.hasUserReadRight(user: request.user, content: child) {
                 html.append("""
-                            <li public class="nav-item">
-                                <a public class="nav-link" href="{{url}}">{{displayName}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{url}}">{{displayName}}
                                 </a>
                             </li>
                             """.replacePlaceholders(language: request.language, [
