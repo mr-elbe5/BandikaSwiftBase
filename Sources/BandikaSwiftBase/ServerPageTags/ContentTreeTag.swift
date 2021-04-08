@@ -43,7 +43,7 @@ public class ContentTreeTag: PageTag {
                         let $current = $('.current','.pagetree');
                         if ($current){
                             let $parents=$current.parents('li');
-                            $parents.addpublic class("open");
+                            $parents.addclass("open");
                         }
                     </script>
                     """)
@@ -70,37 +70,37 @@ public class ContentTreeTag: PageTag {
             // cut, copy
             if content.id != ContentData.ID_ROOT {
                 html.append("""
-                        <a public class ="icon fa fa-scissors" href = "" onclick = "return linkTo('/ctrl/{{type}}/cutContent/{{id}}');" title = "{{_cut}}"> </a>
-                        <a public class ="icon fa fa-copy" href = "" onclick = "return linkTo('/ctrl/{{type}}/copyContent/{{id}}');" title = "{{_copy}}"> </a>
+                        <a class ="icon fa fa-scissors" href = "" onclick = "return linkTo('/ctrl/{{type}}/cutContent/{{id}}');" title = "{{_cut}}"> </a>
+                        <a class ="icon fa fa-copy" href = "" onclick = "return linkTo('/ctrl/{{type}}/copyContent/{{id}}');" title = "{{_copy}}"> </a>
                     """.replacePlaceholders(language: request.language, params))
             }
             // sort children
             if !content.children.isEmpty {
                 html.append("""
-                        <a public class ="icon fa fa-sort" href = "" onclick = "return openModalDialog('/ajax/{{type}}/openSortChildPages/{{id}}');" title = "{{_sortChildPages}}"> </a>              
+                        <a class ="icon fa fa-sort" href = "" onclick = "return openModalDialog('/ajax/{{type}}/openSortChildPages/{{id}}');" title = "{{_sortChildPages}}"> </a>
                     """.replacePlaceholders(language: request.language, params))
             }
             // delete
             if content.id != ContentData.ID_ROOT {
                 html.append("""
-                        <a public class ="icon fa fa-trash-o" href = "" onclick = "if (confirmDelete()) return linkTo('/ctrl/{{type}}/deleteContent/{{id}}');" title = "{{_delete}}"> </a>
+                        <a class ="icon fa fa-trash-o" href = "" onclick = "if (confirmDelete()) return linkTo('/ctrl/{{type}}/deleteContent/{{id}}');" title = "{{_delete}}"> </a>
                     """.replacePlaceholders(language: request.language, params))
             }
             // paste
             if Clipboard.instance.hasData(type: .content) {
                 html.append("""
-                        <a public class ="icon fa fa-paste" href = "/ctrl/{{type}}/pasteContent?parentId={{id}}&parentVersion={{version}}" title = "{{_pasteContent}}"> </a>
+                        <a class ="icon fa fa-paste" href = "/ctrl/{{type}}/pasteContent?parentId={{id}}&parentVersion={{version}}" title = "{{_pasteContent}}"> </a>
                     """.replacePlaceholders(language: request.language, params))
             }
             // new content
             if !content.childTypes.isEmpty {
                 html.append("""
-                        <a public class ="icon fa fa-plus dropdown-toggle" data-toggle = "dropdown" title = "{{_newContent}}" > </a>
-                        <div public class ="dropdown-menu">
+                        <a class ="icon fa fa-plus dropdown-toggle" data-toggle = "dropdown" title = "{{_newContent}}" > </a>
+                        <div class ="dropdown-menu">
                     """.replacePlaceholders(language: request.language, nil))
                 for type in content.childTypes {
                     html.append("""
-                            <a public class ="dropdown-item" onclick = "return openModalDialog('/ajax/{{type}}/openCreateContentData?parentId={{id}}&type={{pageType}}');">{{pageTypeName}}</a>
+                            <a class ="dropdown-item" onclick = "return openModalDialog('/ajax/{{type}}/openCreateContentData?parentId={{id}}&type={{pageType}}');">{{pageTypeName}}</a>
                     """.replacePlaceholders(language: request.language, [
                         "type": content.type.rawValue,
                         "id": String(content.id),

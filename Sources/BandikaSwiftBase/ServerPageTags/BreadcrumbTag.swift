@@ -39,8 +39,7 @@ public class BreadcrumbTag: PageTag {
         }
         html.append("""
                                 <li class="breadcrumb-item">
-                                    <a>{{displayName}}
-                                    </a>
+                                    <a>{{displayName}}</a>
                                 </li>
                     """.replacePlaceholders(language: request.language, [
             "displayName": content.displayName.toHtml()]))
