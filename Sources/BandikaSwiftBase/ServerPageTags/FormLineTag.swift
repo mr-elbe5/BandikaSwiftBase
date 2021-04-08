@@ -14,7 +14,7 @@ import SwiftyHttpServer
 public class FormLineTag: PageTag {
 
     override public class var type: TagType {
-        "formline"
+        "line"
     }
 
     public var name = ""

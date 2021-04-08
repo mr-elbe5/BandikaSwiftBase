@@ -14,7 +14,7 @@ import SwiftyHttpServer
 public class FormFileTag: FormLineTag {
 
     override public class var type: TagType {
-        "formfile"
+        "file"
     }
 
     override public func getPreControlHtml(request: Request) -> String {

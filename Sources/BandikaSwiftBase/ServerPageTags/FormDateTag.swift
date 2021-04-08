@@ -14,7 +14,7 @@ import SwiftyHttpServer
 public class FormDateTag: FormLineTag {
 
     override public class var type: TagType {
-        "formdate"
+        "date"
     }
 
     override public func getPreControlHtml(request: Request) -> String{

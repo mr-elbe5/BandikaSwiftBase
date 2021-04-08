@@ -14,7 +14,7 @@ import SwiftyHttpServer
 public class FormPasswordTag : FormLineTag{
 
     override public class var type: TagType {
-        "formpassword"
+        "password"
     }
 
     override public func getPreControlHtml(request: Request) -> String{

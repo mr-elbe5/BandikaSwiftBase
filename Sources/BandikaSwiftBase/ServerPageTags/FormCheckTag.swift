@@ -14,7 +14,7 @@ import SwiftyHttpServer
 public class FormCheckTag: PageTag {
 
     override public class var type: TagType {
-        "formcheck"
+        "check"
     }
 
     public var name = ""

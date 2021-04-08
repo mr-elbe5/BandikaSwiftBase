@@ -14,7 +14,7 @@ import SwiftyHttpServer
 public class FormTextAreaTag: FormLineTag {
 
     override public class var type: TagType {
-        "formtextarea"
+        "textarea"
     }
 
     public var height = ""

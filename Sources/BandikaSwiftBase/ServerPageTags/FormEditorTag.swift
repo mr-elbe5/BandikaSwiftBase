@@ -14,7 +14,7 @@ import SwiftyHttpServer
 public class FormEditorTag : FormLineTag{
 
     override public class var type: TagType {
-        "formeditor"
+        "editor"
     }
 
     public var type = "text"

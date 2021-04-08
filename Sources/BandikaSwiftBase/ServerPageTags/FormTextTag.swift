@@ -14,7 +14,7 @@ import SwiftyHttpServer
 public class FormTextTag : FormLineTag{
 
     override public class var type: TagType {
-        "formtext"
+        "text"
     }
 
     public var value = ""

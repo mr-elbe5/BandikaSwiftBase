@@ -14,7 +14,7 @@ import SwiftyHttpServer
 public class FormRadioTag: FormCheckTag {
 
     override public class var type: TagType {
-        "formradio"
+        "radio"
     }
 
     public static let radioPreHtml =

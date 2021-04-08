@@ -14,7 +14,7 @@ import SwiftyHttpServer
 public class FormSelectTag : FormLineTag{
 
     override public class var type: TagType {
-        "formselect"
+        "select"
     }
 
     public var onChange = ""
