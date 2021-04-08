@@ -44,20 +44,17 @@ public class Statics: Codable{
         case defaultPassword
         case defaultLocale
         case cleanupInterval
-        case shutdownCode
     }
     
     public var salt: String
     public var defaultPassword: String
     public var defaultLocale: Locale
     public var cleanupInterval : Int = 10
-    public var shutdownCode : String
-    
+
     public required init(){
         salt = ""
         defaultPassword = ""
         defaultLocale = Locale(identifier: "en")
-        shutdownCode = ""
     }
     
     public required init(from decoder: Decoder) throws {
@@ -66,7 +63,6 @@ public class Statics: Codable{
         defaultPassword = try values.decodeIfPresent(String.self, forKey: .defaultPassword) ?? ""
         defaultLocale = try values.decodeIfPresent(Locale.self, forKey: .defaultLocale) ?? Locale.init(identifier: "en")
         cleanupInterval = try values.decodeIfPresent(Int.self, forKey: .cleanupInterval) ?? 10
-        shutdownCode = try values.decodeIfPresent(String.self, forKey: .shutdownCode) ?? UserSecurity.generateShutdownString()
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -74,14 +70,12 @@ public class Statics: Codable{
         try container.encode(salt, forKey: .salt)
         try container.encode(defaultPassword, forKey: .defaultPassword)
         try container.encode(defaultLocale, forKey: .defaultLocale)
-        try container.encode(shutdownCode, forKey: .shutdownCode)
     }
     
     public func initDefaults(){
         salt = UserSecurity.generateSaltString()
         defaultPassword =  UserSecurity.encryptPassword(password: "pass", salt: salt)
         defaultLocale = Locale(identifier: "en")
-        shutdownCode = UserSecurity.generateShutdownString()
     }
     
     public func save() -> Bool{

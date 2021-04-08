@@ -55,13 +55,13 @@ public class BandikaRouter : Router {
             return StaticFileController.instance.processLayoutPath(path: path, request: request)
         }
         // shutdown request
-        if path.hasPrefix(Router.shutdownPrefix), let server = server{
+        if path.hasPrefix(Router.shutdownPrefix){
             let pathSegments = path.split("/")
             if pathSegments.count > 1 {
                 let shutdownCode = pathSegments[1]
-                if shutdownCode == Statics.instance.shutdownCode {
+                if shutdownCode == HttpServer.instance.shutdownCode {
                     DispatchQueue.global(qos: .userInitiated).async {
-                        server.stop()
+                        HttpServer.instance.stop()
                     }
                     return Response(code: .ok)
                 }
