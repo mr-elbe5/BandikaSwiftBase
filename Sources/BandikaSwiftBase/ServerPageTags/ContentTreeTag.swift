@@ -43,7 +43,7 @@ public class ContentTreeTag: PageTag {
                         let $current = $('.current','.pagetree');
                         if ($current){
                             let $parents=$current.parents('li');
-                            $parents.addclass("open");
+                            $parents.addClass("open");
                         }
                     </script>
                     """)
