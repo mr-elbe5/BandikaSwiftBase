@@ -13,7 +13,7 @@ let package = Package(
             targets: ["BandikaSwiftBase"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/mr-elbe5/SwiftyHttpServer", from: "1.1.11"),
+        .package(url: "https://github.com/mr-elbe5/SwiftyHttpServer", from: "1.1.12"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
