@@ -54,10 +54,10 @@ public class Statics: Codable{
     public var shutdownCode : String
 
     public required init(){
-        salt = ""
+        salt = Statics.generateSaltString()
         defaultPassword = ""
         defaultLocale = Locale(identifier: "en")
-        shutdownCode = ""
+        shutdownCode = Statics.generateShutdownCode()
     }
     
     public required init(from decoder: Decoder) throws {
@@ -101,13 +101,17 @@ public class Statics: Codable{
     }
 
     private static func generateSaltString() -> String {
-        Data(bytes: generateSalt(), count: 8).base64EncodedString()
+        let salt = Data(bytes: generateSalt(), count: 8).base64EncodedString()
+        Log.debug("generated salt string '\(salt)'")
+        return salt
     }
 
     private static func generateShutdownCode() -> String {
         var bytes = [UInt8](repeating: 0, count: 8)
         _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
-        return Data(bytes: bytes, count: 8).base64EncodedString()
+        let code = Data(bytes: bytes, count: 8).base64EncodedString()
+        Log.debug("generated shutdown code '\(code)'")
+        return code
     }
     
 }
