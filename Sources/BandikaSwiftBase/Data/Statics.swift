@@ -109,7 +109,12 @@ public class Statics: Codable{
     private static func generateShutdownCode() -> String {
         var bytes = [UInt8](repeating: 0, count: 8)
         _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
-        let code = Data(bytes: bytes, count: 8).base64EncodedString()
+        var code = Data(bytes: bytes, count: 8).base64EncodedString()
+        // replace leading "/" as it destroys valid shutdown url
+        if code.hasPrefix("/"){
+            code.remove(at: code.startIndex)
+            code = "#" + code
+        }
         Log.debug("generated shutdown code '\(code)'")
         return code
     }
