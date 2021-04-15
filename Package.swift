@@ -22,7 +22,10 @@ let package = Package(
             name: "BandikaSwiftBase",
             dependencies: [
                 "SwiftyHttpServer"
-			]),
+			],
+            resources: [
+                .copy("Resources")
+            ]),
         .testTarget(
             name: "BandikaSwiftBaseTests",
             dependencies: ["BandikaSwiftBase"]),
