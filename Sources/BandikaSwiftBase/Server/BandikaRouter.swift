@@ -74,6 +74,7 @@ public class BandikaRouter : Router {
                 }
                 else{
                     Log.warn("shutdown codes don't match")
+                    Log.debug("received \(shutdownCode) vs actual \(delegate.getShutdownCode())")
                 }
             }
             return Response(code: .badRequest)
