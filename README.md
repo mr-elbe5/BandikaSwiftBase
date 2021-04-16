@@ -6,6 +6,6 @@ SwiftyBandika is a CMS server app on the Apple App Store (thus including a front
 
 SwiftyBandikaCL is the headless (Command Line based) server.
 
-This library is based on SwiftNIO with NIOHTTP1
+This library is based on SwiftNIO with NIOHTTP1 and swift-crypto
 
 It uses its own Request and Response classes as well as an own template type which is more request orientated (so not quite as dumb) compared to other template types.
