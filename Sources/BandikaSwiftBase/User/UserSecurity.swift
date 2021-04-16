@@ -8,13 +8,35 @@
 */
 
 import Foundation
+import SwiftyLog
+#if os(macOS)
+// not available on linux, so no PBKDF2
 import CommonCrypto
+#endif
+import Crypto
 
 public class UserSecurity{
     
     private static var rounds : UInt32 = 2205
     private static var keyByteCount : Int = 160
     
+    public static func verifyPassword(savedHash: String, password: String) -> Bool{
+        var passwordHash : String = encryptPassword(password: password)
+        if savedHash == passwordHash {
+            return true
+        }
+        //backward compatibility
+        #if os(macOS)
+        passwordHash = encryptPassword(password: password, salt: Statics.instance.salt)
+        if savedHash == passwordHash {
+            return true
+        }
+        #endif
+        return false
+    }
+    
+    #if os(macOS)
+    // not available on linux, so no PBKDF2
     public static func encryptPassword(password : String, salt: String) -> String{
         var outputBytes = Array<UInt8>(repeating: 0, count: kCCKeySizeAES256)
         let status = CCKeyDerivationPBKDF(
@@ -32,5 +54,17 @@ public class UserSecurity{
         }
         return Data(outputBytes).base64EncodedString()
     }
+    #endif
+    
+    public static func encryptPassword(password : String) -> String{
+        let inputData = Data(password.utf8)
+        let hashed = SHA512.hash(data: inputData)
+        let hashString = hashed.compactMap{
+            String(format: "%02x", $0)
+        }.joined()
+        Log.debug("password hash = \(hashString)")
+        return hashString
+    }
+    
 
 }

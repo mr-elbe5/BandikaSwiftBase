@@ -175,8 +175,7 @@ public class UserContainer : DataContainer{
     
     public func getUser(login: String, pwd: String) -> UserData?{
         if let data = userLoginMap[login]{
-            let passwordHash : String = UserSecurity.encryptPassword(password: pwd, salt: Statics.instance.salt)
-            if data.passwordHash == passwordHash {
+            if UserSecurity.verifyPassword(savedHash: data.passwordHash, password: pwd){
                 return data
             }
         }

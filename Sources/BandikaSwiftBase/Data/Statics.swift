@@ -79,7 +79,7 @@ public class Statics: Codable{
     
     public func initDefaults(){
         salt = Statics.generateSaltString()
-        defaultPassword =  UserSecurity.encryptPassword(password: "pass", salt: salt)
+        defaultPassword =  UserSecurity.encryptPassword(password: "pass")
         defaultLocale = Locale(identifier: "en")
         shutdownCode = Statics.generateShutdownCode()
     }
@@ -94,27 +94,14 @@ public class Statics: Codable{
         return true
     }
 
-    private static func generateSalt() -> [UInt8] {
-        var bytes = [UInt8](repeating: 0, count: 8)
-        _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
-        return bytes
-    }
-
     private static func generateSaltString() -> String {
-        let salt = Data(bytes: generateSalt(), count: 8).base64EncodedString()
+        let salt = String.generateRandomString(length: 8)
         Log.debug("generated salt string '\(salt)'")
         return salt
     }
 
     private static func generateShutdownCode() -> String {
-        var bytes = [UInt8](repeating: 0, count: 8)
-        _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
-        var code = Data(bytes: bytes, count: 8).base64EncodedString()
-        // replace leading "/" as it destroys valid shutdown url
-        if code.hasPrefix("/"){
-            code.remove(at: code.startIndex)
-            code = "#" + code
-        }
+        let code = String.generateRandomString(length: 8)
         Log.debug("generated shutdown code '\(code)'")
         return code
     }

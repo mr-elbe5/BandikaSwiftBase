@@ -139,7 +139,7 @@ public class UserData: BaseData {
         if password.isEmpty {
             passwordHash = ""
         } else {
-            passwordHash = UserSecurity.encryptPassword(password: password, salt: Statics.instance.salt)
+            passwordHash = UserSecurity.encryptPassword(password: password)
         }
     }
 

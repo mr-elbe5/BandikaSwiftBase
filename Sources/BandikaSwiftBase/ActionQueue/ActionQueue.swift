@@ -31,7 +31,9 @@ public class ActionQueue{
         if timer == nil{
             stop()
         }
-        timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(checkActions), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true) { timer in
+            self.checkActions()
+        }
     }
 
     public func stop(){
@@ -49,7 +51,7 @@ public class ActionQueue{
         }
     }
 
-    @objc public func checkActions() {
+    public func checkActions() {
         lock()
         defer{unlock()}
         for action in regularActions{

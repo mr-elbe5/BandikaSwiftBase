@@ -3,12 +3,16 @@
 //
 
 import Foundation
-import Cocoa
 import SwiftyHttpServer
+
+#if os(macOS)
+import Cocoa
+#endif
 
 extension MemoryFile{
 
     public func createPreview(fileName: String, maxSize: Int) -> MemoryFile?{
+        #if os(macOS)
         if let src = NSImage(data: data){
             if let previewImage : NSImage = src.resizeMaintainingAspectRatio(withSize: NSSize(width: FileData.MAX_PREVIEW_SIDE, height: FileData.MAX_PREVIEW_SIDE)){
                 if let tiff = previewImage.tiffRepresentation, let tiffData = NSBitmapImageRep(data: tiff) {
@@ -21,6 +25,9 @@ extension MemoryFile{
             }
         }
         return nil
+        #else
+        return nil
+        #endif
     }
 
 }
