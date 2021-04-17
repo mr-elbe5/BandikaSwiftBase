@@ -40,47 +40,35 @@ public class Statics: Codable{
     }
     
     private enum SectionDataCodingKeys: CodingKey{
-        case salt
         case defaultPassword
-        case defaultLocale
         case cleanupInterval
         case shutdownCode
     }
     
-    public var salt: String
     public var defaultPassword: String
-    public var defaultLocale: Locale
     public var cleanupInterval : Int = 10
     public var shutdownCode : String
 
     public required init(){
-        salt = Statics.generateSaltString()
-        defaultPassword = ""
-        defaultLocale = Locale(identifier: "en")
+        defaultPassword = UserSecurity.encryptPassword(password: "pass")
         shutdownCode = Statics.generateShutdownCode()
     }
     
     public required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: SectionDataCodingKeys.self)
-        salt = try values.decodeIfPresent(String.self, forKey: .salt) ?? Statics.generateSaltString()
         defaultPassword = try values.decodeIfPresent(String.self, forKey: .defaultPassword) ?? ""
-        defaultLocale = try values.decodeIfPresent(Locale.self, forKey: .defaultLocale) ?? Locale.init(identifier: "en")
         cleanupInterval = try values.decodeIfPresent(Int.self, forKey: .cleanupInterval) ?? 10
         shutdownCode = try values.decodeIfPresent(String.self, forKey: .shutdownCode) ?? Statics.generateShutdownCode()
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: SectionDataCodingKeys.self)
-        try container.encode(salt, forKey: .salt)
         try container.encode(defaultPassword, forKey: .defaultPassword)
-        try container.encode(defaultLocale, forKey: .defaultLocale)
         try container.encode(shutdownCode, forKey: .shutdownCode)
     }
     
     public func initDefaults(){
-        salt = Statics.generateSaltString()
         defaultPassword =  UserSecurity.encryptPassword(password: "pass")
-        defaultLocale = Locale(identifier: "en")
         shutdownCode = Statics.generateShutdownCode()
     }
     
@@ -92,12 +80,6 @@ public class Statics: Codable{
             return false
         }
         return true
-    }
-
-    private static func generateSaltString() -> String {
-        let salt = String.generateRandomString(length: 8)
-        Log.debug("generated salt string '\(salt)'")
-        return salt
     }
 
     private static func generateShutdownCode() -> String {

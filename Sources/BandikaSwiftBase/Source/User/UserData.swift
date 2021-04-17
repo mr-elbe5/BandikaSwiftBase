@@ -68,7 +68,7 @@ public class UserData: BaseData {
         lastName = ""
         email = ""
         login = ""
-        passwordHash = ""
+        passwordHash = UserSecurity.encryptPassword(password: "pass")
         street = ""
         zipCode = ""
         city = ""
@@ -85,7 +85,7 @@ public class UserData: BaseData {
         lastName = try values.decodeIfPresent(String.self, forKey: .lastName) ?? ""
         email = try values.decodeIfPresent(String.self, forKey: .email) ?? ""
         login = try values.decodeIfPresent(String.self, forKey: .login) ?? ""
-        passwordHash = try values.decodeIfPresent(String.self, forKey: .passwordHash) ?? ""
+        passwordHash = try values.decodeIfPresent(String.self, forKey: .passwordHash) ?? UserSecurity.encryptPassword(password: "pass")
         street = try values.decodeIfPresent(String.self, forKey: .street) ?? ""
         zipCode = try values.decodeIfPresent(String.self, forKey: .zipCode) ?? ""
         city = try values.decodeIfPresent(String.self, forKey: .city) ?? ""

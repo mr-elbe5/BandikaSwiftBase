@@ -33,6 +33,7 @@ extension StaticFileController{
     
     public func useBaseFiles(){
         self.bundle = Bundle.module
+        self.bundleName = "Web"
     }
 
 }

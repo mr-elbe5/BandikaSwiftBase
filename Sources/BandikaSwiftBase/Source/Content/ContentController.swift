@@ -38,7 +38,6 @@ public class ContentController: TypedController {
     public func show(id: Int?, request: Request) -> Response? {
         if let id = id, let content = ContentContainer.instance.getContent(id: id) {
             request.setContent(content)
-            request.addPageString("language", Statics.instance.defaultLocale.languageCode ?? "en")
             request.addPageString("title", Statics.title.toHtml())
             request.addPageString("keywords", content.keywords.toHtml())
             request.addPageString("description", content.description.trim().toHtml())

@@ -14,6 +14,7 @@ extension ServerPageController{
     
     public func useBaseResources(){
         self.bundle = Bundle.module
+        self.bundleName = "ServerPages"
     }
     
 }
