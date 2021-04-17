@@ -8,6 +8,7 @@
 */
 
 import Foundation
+import SwiftyLog
 
 public class DataContainer : Codable{
     
@@ -48,6 +49,7 @@ public class DataContainer : Codable{
     
     public func setHasChanged() {
         if (!changed) {
+            Log.debug("data set to changed")
             increaseVersion();
             changeDate = Date()
             changed = true;

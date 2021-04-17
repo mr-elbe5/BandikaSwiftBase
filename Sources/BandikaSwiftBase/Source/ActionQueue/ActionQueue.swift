@@ -7,6 +7,7 @@
  You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses/>.
 */
 import Foundation
+import SwiftyLog
 
 public class ActionQueue{
 
@@ -28,7 +29,7 @@ public class ActionQueue{
     }
 
     public func start(){
-        if timer == nil{
+        if timer != nil{
             stop()
         }
         timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true) { timer in
@@ -59,6 +60,7 @@ public class ActionQueue{
         }
         while !actions.isEmpty {
             let action = actions.removeFirst()
+            Log.debug("executing action: \(action.type)")
             action.execute()
         }
     }
