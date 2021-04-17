@@ -59,7 +59,6 @@ public struct Paths{
         if !Files.fileExists(path: logFile){
             _ = Files.saveFile(text: "", path: logFile)
         }
-        print("log file is \(logFile)")
         Log.info("base directory is \(baseDirectory)")
         Log.info("data directory is \(dataDirectory)")
         Log.info("file directory is \(fileDirectory)")
