@@ -32,9 +32,11 @@ public class ActionQueue{
         if timer != nil{
             stop()
         }
-        timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true) { timer in
+        timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { timer in
+            Log.debug("timer fires")
             self.checkActions()
         }
+        Log.info("action queue timer started")
     }
 
     public func stop(){
