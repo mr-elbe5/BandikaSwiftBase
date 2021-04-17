@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/mr-elbe5/SwiftyHttpServer",
         "state": {
           "branch": null,
-          "revision": "ee9b411d8288266795ff9226aa7e37f959a34316",
-          "version": "1.1.16"
+          "revision": "a8288a88c465b9e28207c549a1b4186dde1fde1e",
+          "version": "1.1.17"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/mr-elbe5/SwiftyLog",
         "state": {
           "branch": null,
-          "revision": "e11959ff65fc6ba9dec7fde91add6236f2837e2b",
-          "version": "1.0.3"
+          "revision": "37a327dccddc11bfea977dcc3a6fea9abe1dfc3a",
+          "version": "1.0.4"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/mr-elbe5/SwiftyStringExtensions",
         "state": {
           "branch": null,
-          "revision": "54306b92452fb3fbda2b741a94ec4035ccfa8ace",
-          "version": "1.0.6"
+          "revision": "07533de13c7e097d90b426a620b1cf7a4bb70a28",
+          "version": "1.0.7"
         }
       }
     ]

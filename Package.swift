@@ -13,7 +13,7 @@ let package = Package(
             targets: ["BandikaSwiftBase"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/mr-elbe5/SwiftyHttpServer", from: "1.1.16"),
+        .package(url: "https://github.com/mr-elbe5/SwiftyHttpServer", from: "1.1.17"),
         .package(url: "https://github.com/apple/swift-crypto", from: "1.0.0")
     ],
     targets: [
