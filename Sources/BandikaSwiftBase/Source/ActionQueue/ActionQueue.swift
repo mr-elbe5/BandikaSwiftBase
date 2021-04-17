@@ -33,7 +33,6 @@ public class ActionQueue{
             stop()
         }
         timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { timer in
-            Log.debug("timer fires")
             self.checkActions()
         }
         Log.info("action queue timer started")
