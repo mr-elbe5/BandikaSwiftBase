@@ -89,7 +89,7 @@ public class FileData: BaseData {
         maxPreviewSide = FileData.MAX_PREVIEW_SIDE
         super.init()
         file = DiskFile(name: idFileName, live: false)
-        if isImage{
+        if isImage, ImageFactory.instance.canCreatePreview(){
             previewFile = DiskFile(name: previewFileName, live: false)
         }
     }
@@ -108,7 +108,7 @@ public class FileData: BaseData {
         maxPreviewSide = FileData.MAX_PREVIEW_SIDE
         try super.init(from: decoder)
         file = DiskFile(name: idFileName, live: true)
-        if isImage{
+        if isImage, ImageFactory.instance.canCreatePreview(){
             previewFile = DiskFile(name: previewFileName, live: true)
         }
     }
@@ -143,7 +143,7 @@ public class FileData: BaseData {
             maxHeight = fileData.maxHeight
             maxPreviewSide = fileData.maxPreviewSide
             file = DiskFile(name: fileName, live: fileData.live)
-            if isImage{
+            if fileData.previewFile != nil{
                 previewFile = DiskFile(name: previewFileName, live: fileData.live)
             }
         }
@@ -152,7 +152,7 @@ public class FileData: BaseData {
     override public func setCreateValues(request: Request) {
         super.setCreateValues(request: request)
         file = DiskFile(name: fileName, live: false)
-        if isImage{
+        if isImage, ImageFactory.instance.canCreatePreview(){
             previewFile = DiskFile(name: previewFileName, live: false)
         }
     }
@@ -170,9 +170,9 @@ public class FileData: BaseData {
                 request.addFormError("could not create file")
                 return;
             }
-            if isImage {
+            if isImage, ImageFactory.instance.canCreatePreview() {
                 previewFile = DiskFile(name: previewFileName, live: false)
-                if let memoryPreviewFile = memoryFile.createPreview(fileName: previewFileName, maxSize: FileData.MAX_PREVIEW_SIDE) {
+                if let memoryPreviewFile = ImageFactory.instance.createPreview(fileData: self, original: memoryFile) {
                     if !previewFile!.writeToDisk(memoryPreviewFile) {
                         request.addFormError("could not create file")
                         return
