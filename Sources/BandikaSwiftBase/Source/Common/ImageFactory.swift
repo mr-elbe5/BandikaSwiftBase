@@ -31,9 +31,9 @@ open class ImageFactory {
         #if os(macOS)
         return true
         #elseif os(Linux)
-        return nil
+        return false
         #else
-        return nil
+        return false
         #endif
     }
 
