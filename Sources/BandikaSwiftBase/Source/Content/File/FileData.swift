@@ -171,8 +171,8 @@ public class FileData: BaseData {
                 return;
             }
             if isImage {
+                previewFile = DiskFile(name: previewFileName, live: false)
                 if let memoryPreviewFile = memoryFile.createPreview(fileName: previewFileName, maxSize: FileData.MAX_PREVIEW_SIDE) {
-                    previewFile = DiskFile(name: previewFileName, live: false)
                     if !previewFile!.writeToDisk(memoryPreviewFile) {
                         request.addFormError("could not create file")
                         return

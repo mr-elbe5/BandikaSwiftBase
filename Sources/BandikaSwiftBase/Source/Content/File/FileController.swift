@@ -80,12 +80,14 @@ public class FileController: TypedController {
             if !Right.hasUserReadRight(user: request.user, contentId: file.parentId) {
                 return Response(code: .forbidden)
             }
-            Log.info("loading preview file \(id)")
-            if let pvf = file.previewFile, let data: Data = Files.readFile(path: pvf.path) {
-                let contentType = MimeType.from(file.file.path)
-                return Response(data: data, fileName: file.fileName, contentType: contentType)
+            if let pvf = file.previewFile, pvf.exists(){
+                if let data: Data = Files.readFile(path: pvf.path) {
+                    Log.info("loading preview file \(id)")
+                    let contentType = MimeType.from(file.file.path)
+                    return Response(data: data, fileName: file.fileName, contentType: contentType)
+                }
+                Log.warn("could not read preview file \(pvf.path)")
             }
-            Log.info("reading preview file for id \(id) failed")
         }
         return Response(code: .notFound)
     }

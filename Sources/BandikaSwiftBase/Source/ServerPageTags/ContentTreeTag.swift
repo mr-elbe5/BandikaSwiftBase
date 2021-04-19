@@ -146,12 +146,11 @@ public class ContentTreeTag: PageTag {
                             <ul>
                         """)
             for file in content.files {
-                let fileParams = [
+                var fileParams = [
                     "id": String(file.id),
                     "displayName": file.displayName.toHtml(),
                     "fileName": file.fileName.toHtml(),
-                    "url": file.url,
-                    "previewUrl": file.previewUrl]
+                    "url": file.url]
                 html.append("""
                                <li>
                                    <div class="treeline">
@@ -159,11 +158,14 @@ public class ContentTreeTag: PageTag {
                                            {{displayName}}
                             """.replacePlaceholders(language: request.language, fileParams))
                 if file.isImage {
-                    html.append("""
-                                           <span class="hoverImage">
-                                                <img src="{{previewUrl}}" alt="{{fileName)}}"/>
-                                            </span>
-                                """.replacePlaceholders(language: request.language, fileParams))
+                    if file.previewFile?.exists() ?? false {
+                        fileParams["previewUrl"] = file.previewUrl
+                        html.append("""
+                                               <span class="hoverImage">
+                                                    <img src="{{previewUrl}}" alt="{{fileName)}}"/>
+                                                </span>
+                                    """.replacePlaceholders(language: request.language, fileParams))
+                    }
                 }
                 // single file icons
                 html.append("""

@@ -72,13 +72,15 @@ public class CkTreeTag: PageTag {
                                 "displayName": file.displayName.toHtml(),
                                 ]))
                 if file.isImage {
-                    html.append("""
-                                        <span class="hoverImage">
-                                            <img src="{{previewUrl}}" alt="{{fileName)}}"/>
-                                        </span>
-                                """.replacePlaceholders(language: request.language, [
-                                    "fileName": file.fileName.toHtml(),
-                                    "previewUrl": file.previewUrl]))
+                    if file.previewFile?.exists() ?? false {
+                        html.append("""
+                                            <span class="hoverImage">
+                                                <img src="{{previewUrl}}" alt="{{fileName)}}"/>
+                                            </span>
+                                    """.replacePlaceholders(language: request.language, [
+                            "fileName": file.fileName.toHtml(),
+                            "previewUrl": file.previewUrl]))
+                    }
                 }
                 // single file icons
                 html.append("""
