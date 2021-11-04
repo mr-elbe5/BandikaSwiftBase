@@ -8,7 +8,7 @@
 */
 
 import Foundation
-import SwiftyLog
+
 import Crypto
 
 public class UserSecurity{

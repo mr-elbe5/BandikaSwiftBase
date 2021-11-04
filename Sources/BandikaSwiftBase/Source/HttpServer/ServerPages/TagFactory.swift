@@ -8,13 +8,31 @@
 */
 
 import Foundation
-import SwiftyHttpServer
 
-extension ServerPageController{
-    
-    public func useBaseResources(){
-        self.bundle = Bundle.module
-        self.bundleName = "ServerPages"
+public typealias TagType = String
+
+public protocol TagCreator{
+    func create() -> PageTag
+}
+
+public struct TagFactory {
+
+    private static var types = Dictionary<TagType, TagCreator>()
+
+    public static func addType(type: TagType, creator: TagCreator){
+        types[type] = creator
     }
-    
+
+    public static func addBasicTypes(){
+        addType(type: IfTag.type, creator: IfTagCreator())
+        addType(type: IncludeTag.type, creator: IncludeTagCreator())
+    }
+
+    public static func create(_ type: TagType) -> PageTag? {
+        if let creator = types[type]{
+            return creator.create()
+        }
+        return nil
+    }
+
 }

@@ -13,11 +13,8 @@ let package = Package(
             targets: ["BandikaSwiftBase"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/mr-elbe5/SwiftyHttpServer", from: "1.1.20"),
         .package(url: "https://github.com/apple/swift-crypto", from: "1.0.0"),
-        .package(url: "https://github.com/mr-elbe5/SwiftyStringExtensions", from: "1.1.1"),
-        .package(url: "https://github.com/mr-elbe5/SwiftyDataExtensions", from: "1.1.0"),
-        .package(url: "https://github.com/mr-elbe5/SwiftyLog", from: "1.1.1")
+        .package(url: "https://github.com/apple/swift-nio", from: "2.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -25,11 +22,9 @@ let package = Package(
         .target(
             name: "BandikaSwiftBase",
             dependencies: [
-                "SwiftyHttpServer",
                 .product(name: "Crypto", package: "swift-crypto"),
-                "SwiftyStringExtensions",
-                "SwiftyDataExtensions",
-                "SwiftyLog",
+                .product(name: "NIO", package: "swift-nio"),
+                .product(name: "NIOHTTP1", package: "swift-nio"),
 			],
             resources: [
                 .copy("ServerPages"),

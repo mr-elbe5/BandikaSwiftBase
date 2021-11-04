@@ -8,7 +8,7 @@
 */
 
 import Foundation
-import SwiftyHttpServer
+
 
 public class HtmlField : PartField{
 

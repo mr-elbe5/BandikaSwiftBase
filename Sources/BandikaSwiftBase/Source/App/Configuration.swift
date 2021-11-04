@@ -8,7 +8,6 @@
 */
 
 import Foundation
-import SwiftyLog
 
 public class Configuration: DataContainer{
 

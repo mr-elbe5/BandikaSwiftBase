@@ -8,7 +8,7 @@
 */
 
 import Foundation
-import SwiftyLog
+
 
 public struct TemplateCache {
 

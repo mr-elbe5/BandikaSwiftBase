@@ -8,27 +8,24 @@
 */
 
 import Foundation
-import SwiftyHttpServer
 
-extension Message {
+public class IfTag: PageTag{
 
-    public static var messageHtml =
-            """
-            <div class="alert alert-{{type}} alert-dismissible fade show" role="alert">
-                {{message}}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            """
+    override open class var type : TagType{
+        "if"
+    }
 
-    public func getHtml(request: Request) -> String {
-        if request.hasMessage {
-            return Message.messageHtml.replacePlaceholders(language: request.language, [
-                "type": type.rawValue,
-                "message": text.hasPrefix("_") ? text.toLocalizedHtml(language: request.language) : text.toHtml()])
+    override public func getHtml(request: Request) -> String {
+        if getBoolAttribute("condition", request) {
+            return getChildHtml(request: request)
         }
         return ""
     }
 
+}
+
+public class IfTagCreator : TagCreator{
+    public func create() -> PageTag{
+        IfTag()
+    }
 }

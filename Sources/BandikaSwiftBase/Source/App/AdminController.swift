@@ -8,7 +8,6 @@
 */
 
 import Foundation
-import SwiftyHttpServer
 
 public class AdminController: TypedController {
 
