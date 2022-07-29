@@ -9,7 +9,20 @@ import Foundation
 
 public struct ImageMagick{
     
-    public static var magickPath = "/opt/homebrew/bin/magick"
+    public static var magickPath = ""
+    
+    public static func enable(path: String) -> Bool{
+        let task = Process()
+        task.launchPath = path
+        task.arguments = ["-version"]
+        task.launch()
+        task.waitUntilExit()
+        if task.terminationStatus == 0{
+            ImageMagick.magickPath = path
+            return true
+        }
+        return false
+    }
     
     @discardableResult
     public static func copy(path: String, from: String, to: String) -> Bool{

@@ -35,6 +35,7 @@ public class Configuration: DataContainer{
     public enum CodingKeys: String, CodingKey {
         case host
         case webPort
+        case imageMagickPath
         case applicationName
         case autostart
         
@@ -45,6 +46,7 @@ public class Configuration: DataContainer{
 
     public var host : String
     public var webPort : Int
+    public var imageMagickPath : String
     public var applicationName : String
     public var autostart = false
     
@@ -54,16 +56,20 @@ public class Configuration: DataContainer{
         host = "localhost"
         webPort = 8080
         applicationName = "SwiftyBandika"
+        imageMagickPath = "/opt/homebrew/bin/magick"
         super.init()
+        checkImageMagick()
     }
     
     public required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         host = try values.decodeIfPresent(String.self, forKey: .host) ?? "localhost"
         webPort = try values.decodeIfPresent(Int.self, forKey: .webPort) ?? 0
+        imageMagickPath = try values.decodeIfPresent(String.self, forKey: .imageMagickPath) ?? "/opt/homebrew/bin/magick"
         applicationName = try values.decodeIfPresent(String.self, forKey: .applicationName) ?? "SwiftyBandika"
         autostart = try values.decodeIfPresent(Bool.self, forKey: .autostart) ?? false
         try super.init(from: decoder)
+        checkImageMagick()
     }
     
     override public func encode(to encoder: Encoder) throws {
@@ -71,6 +77,7 @@ public class Configuration: DataContainer{
         try super.encode(to: encoder)
         try container.encode(host, forKey: .host)
         try container.encode(webPort, forKey: .webPort)
+        try container.encode(imageMagickPath, forKey: .imageMagickPath)
         try container.encode(applicationName, forKey: .applicationName)
         try container.encode(autostart, forKey: .autostart)
     }
@@ -82,6 +89,17 @@ public class Configuration: DataContainer{
     private func unlock(){
         configSemaphore.signal()
     }
+    
+    private func checkImageMagick(){
+        if !ImageMagick.enable(path: imageMagickPath){
+            imageMagickPath = ""
+            save()
+        }
+    }
+    
+    public var isImageMagickEnabled : Bool{
+        !imageMagickPath.isEmpty
+    }
 
     override public func checkChanged(){
         if (changed) {
@@ -92,6 +110,7 @@ public class Configuration: DataContainer{
         }
     }
     
+    @discardableResult
     override public func save() -> Bool{
         Log.info("saving configuration")
         lock()
