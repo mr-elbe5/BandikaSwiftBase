@@ -12,6 +12,10 @@ import Foundation
 public class Configuration: DataContainer{
 
     public static var instance = Configuration()
+    
+    public static let defaultHost = "localhost"
+    public static let defaultName = "SwiftyBandika"
+    public static let magickDefaultPath = "/opt/homebrew/bin/magick"
 
     public static func initialize(){
         Log.info("initializing configuration")
@@ -53,20 +57,20 @@ public class Configuration: DataContainer{
     private let configSemaphore = DispatchSemaphore(value: 1)
     
     public required init(){
-        host = "localhost"
+        host = Configuration.defaultHost
         webPort = 8080
-        applicationName = "SwiftyBandika"
-        imageMagickPath = "/opt/homebrew/bin/magick"
+        applicationName = Configuration.defaultName
+        imageMagickPath = Configuration.magickDefaultPath
         super.init()
         checkImageMagick()
     }
     
     public required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        host = try values.decodeIfPresent(String.self, forKey: .host) ?? "localhost"
+        host = try values.decodeIfPresent(String.self, forKey: .host) ?? Configuration.defaultHost
         webPort = try values.decodeIfPresent(Int.self, forKey: .webPort) ?? 0
-        imageMagickPath = try values.decodeIfPresent(String.self, forKey: .imageMagickPath) ?? "/opt/homebrew/bin/magick"
-        applicationName = try values.decodeIfPresent(String.self, forKey: .applicationName) ?? "SwiftyBandika"
+        imageMagickPath = try values.decodeIfPresent(String.self, forKey: .imageMagickPath) ?? Configuration.magickDefaultPath
+        applicationName = try values.decodeIfPresent(String.self, forKey: .applicationName) ?? Configuration.defaultName
         autostart = try values.decodeIfPresent(Bool.self, forKey: .autostart) ?? false
         try super.init(from: decoder)
         checkImageMagick()

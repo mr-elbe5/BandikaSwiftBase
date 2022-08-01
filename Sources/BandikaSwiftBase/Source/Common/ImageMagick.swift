@@ -38,6 +38,15 @@ public struct ImageMagick{
     }
     
     @discardableResult
+    public static func copy(from: String, to: String, newSize: NSSize) -> Bool{
+        return run(args: [
+            from,
+            "-resize \(Int(newSize.width))x\(Int(newSize.height))",
+            to
+        ])
+    }
+    
+    @discardableResult
     public static func run(args : [String]) -> Bool{
         let task = Process()
         task.launchPath = magickPath

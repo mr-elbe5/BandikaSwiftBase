@@ -34,6 +34,13 @@ public class DiskFile{
     public func exists() -> Bool{
         Files.fileExists(path: path)
     }
+    
+    public func readFromDisk() -> MemoryFile?{
+        if Files.fileExists(path: path), let data = Files.readFile(path: path){
+            return MemoryFile(name: name, data: data)
+        }
+        return nil
+    }
 
     public func writeToDisk(_ memoryFile: MemoryFile) -> Bool{
         if Files.fileExists(path: path){

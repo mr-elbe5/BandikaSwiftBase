@@ -164,20 +164,13 @@ public class FileData: BaseData {
         if let memoryFile = request.getFile("file") {
             fileName = memoryFile.name
             contentType = memoryFile.contentType
-            fileType = FileType.fromContentType(contentType: contentType)
             file = DiskFile(name: idFileName, live: false)
             if !file.writeToDisk(memoryFile) {
                 request.addFormError("could not create file")
                 return;
             }
             if isImage, ImageFactory.instance.canCreatePreview() {
-                previewFile = DiskFile(name: previewFileName, live: false)
-                if let memoryPreviewFile = ImageFactory.instance.createPreview(fileData: self, original: memoryFile) {
-                    if !previewFile!.writeToDisk(memoryPreviewFile) {
-                        request.addFormError("could not create file")
-                        return
-                    }
-                }
+                ImageFactory.instance.createPreview(original: file, previewFileName: previewFileName)
             }
             if displayName.isEmpty {
                 displayName = fileName.pathWithoutExtension()
