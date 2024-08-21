@@ -12,14 +12,26 @@ let package = Package(
             name: "BandikaSwiftBase",
             targets: ["BandikaSwiftBase"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-crypto", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-nio", from: "2.0.0"),
+    ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "BandikaSwiftBase",
+            dependencies: [
+                .product(name: "Crypto", package: "swift-crypto"),
+                .product(name: "NIO", package: "swift-nio"),
+                .product(name: "NIOHTTP1", package: "swift-nio"),
+			],
             resources: [
                 .copy("ServerPages"),
                 .copy("Web"),
             ]),
+        .testTarget(
+            name: "BandikaSwiftBaseTests",
+            dependencies: ["BandikaSwiftBase"]),
     ]
 )
