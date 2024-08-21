@@ -8,8 +8,7 @@
 */
 
 import Foundation
-
-import Crypto
+import CryptoKit
 
 public class UserSecurity{
     

@@ -15,7 +15,7 @@ public class Statics: Codable{
     public static var instance = Statics()
 
     public static var title = "Swifty Bandika"
-    public static var startSize = NSMakeSize(1000, 750)
+    public static var startSize = CGSize(width: 1000, height: 750)
 
     public static func initialize(){
         Log.info("initializing statics")

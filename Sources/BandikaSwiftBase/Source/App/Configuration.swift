@@ -62,7 +62,6 @@ public class Configuration: DataContainer{
         applicationName = Configuration.defaultName
         imageMagickPath = Configuration.magickDefaultPath
         super.init()
-        checkImageMagick()
     }
     
     public required init(from decoder: Decoder) throws {
@@ -73,7 +72,6 @@ public class Configuration: DataContainer{
         applicationName = try values.decodeIfPresent(String.self, forKey: .applicationName) ?? Configuration.defaultName
         autostart = try values.decodeIfPresent(Bool.self, forKey: .autostart) ?? false
         try super.init(from: decoder)
-        checkImageMagick()
     }
     
     override public func encode(to encoder: Encoder) throws {
@@ -94,17 +92,6 @@ public class Configuration: DataContainer{
         configSemaphore.signal()
     }
     
-    private func checkImageMagick(){
-        if !ImageMagick.enable(path: imageMagickPath){
-            imageMagickPath = ""
-            save()
-        }
-    }
-    
-    public var isImageMagickEnabled : Bool{
-        !imageMagickPath.isEmpty
-    }
-
     override public func checkChanged(){
         if (changed) {
             if save() {

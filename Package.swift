@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "BandikaSwiftBase",
-	platforms: [.macOS(.v11)],
+    platforms: [.iOS(.v13), .macOS(.v11)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
@@ -13,7 +13,6 @@ let package = Package(
             targets: ["BandikaSwiftBase"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-crypto", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-nio", from: "2.0.0"),
     ],
     targets: [
@@ -22,7 +21,6 @@ let package = Package(
         .target(
             name: "BandikaSwiftBase",
             dependencies: [
-                .product(name: "Crypto", package: "swift-crypto"),
                 .product(name: "NIO", package: "swift-nio"),
                 .product(name: "NIOHTTP1", package: "swift-nio"),
 			],

@@ -250,39 +250,4 @@ public class Files {
         return fileName
     }
 
-    public static func zipDirectory(zipPath: String, sourcePath: String) {
-        // todo
-        let pipe = Pipe()
-        let task = Process()
-        task.executableURL = URL(fileURLWithPath: "/usr/bin/zip")
-        task.arguments = [zipPath, "-d", sourcePath]
-        task.standardOutput = pipe
-        let file = pipe.fileHandleForReading
-        do {
-            try task.run()
-            if let result = NSString(data: file.readDataToEndOfFile(), encoding: String.Encoding.utf8.rawValue) {
-                Log.info("unzip result: \(result as String)")
-            }
-        } catch {
-            Log.error(error.localizedDescription)
-        }
-    }
-
-    public static func unzipDirectory(zipPath: String, destinationPath: String) {
-        let pipe = Pipe()
-        let task = Process()
-        task.executableURL = URL(fileURLWithPath: "/usr/bin/unzip")
-        task.arguments = [zipPath, "-d", destinationPath]
-        task.standardOutput = pipe
-        let file = pipe.fileHandleForReading
-        do {
-            try task.run()
-            if let result = NSString(data: file.readDataToEndOfFile(), encoding: String.Encoding.utf8.rawValue) {
-                Log.info("unzip result: \(result as String)")
-            }
-        } catch {
-            Log.error(error.localizedDescription)
-        }
-    }
-
 }

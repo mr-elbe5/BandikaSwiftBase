@@ -24,7 +24,7 @@ open class ImageFactory {
         #elseif os(Linux)
         return createMagickPreview(original: original, previewFileName: previewFileName)
         #else
-        return nil
+        return false
         #endif
     }
 
@@ -78,12 +78,5 @@ open class ImageFactory {
     }
 
     #endif
-    
-    open func createMagickPreview(original: DiskFile, previewFileName: String) -> Bool {
-        if Configuration.instance.isImageMagickEnabled{
-            return ImageMagick.copy(from: original.path, to: previewFileName, newSize: NSSize(width: FileData.MAX_PREVIEW_SIDE, height: FileData.MAX_PREVIEW_SIDE))
-        }
-        return false
-    }
 
 }
