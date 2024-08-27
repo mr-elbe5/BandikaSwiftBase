@@ -8,7 +8,7 @@
 */
 
 import Foundation
-import CryptoKit
+import CommonCrypto
 
 public class UserSecurity{
     
@@ -24,13 +24,30 @@ public class UserSecurity{
     }
     
     public static func encryptPassword(password : String) -> String{
-        let inputData = Data(password.utf8)
-        let hashed = SHA256.hash(data: inputData)
-        let hashString = hashed.compactMap{
-            String(format: "%02x", $0)
-        }.joined()
-        Log.debug("password hash = \(hashString)")
-        return hashString
+        let hashed = sha256(str: password)
+        Log.debug("password hash = \(hashed)")
+        return hashed
+    }
+    
+    static func sha256(str: String) -> String {
+        if let strData = str.data(using: .utf8) {
+            /// #define CC_SHA256_DIGEST_LENGTH     32
+            /// Creates an array of unsigned 8 bit integers that contains 32 zeros
+            var digest = [UInt8](repeating: 0, count:Int(CC_SHA256_DIGEST_LENGTH))
+     
+            /// CC_SHA256 performs digest calculation and places the result in the caller-supplied buffer for digest (md)
+            /// Takes the strData referenced value (const unsigned char *d) and hashes it into a reference to the digest parameter.
+            let _ = strData.withUnsafeBytes {
+                CC_SHA256($0.baseAddress, UInt32(strData.count), &digest)
+            }
+     
+            var sha256String = ""
+            for byte in digest {
+                sha256String += String(format:"%02x", UInt8(byte))
+            }
+            return sha256String
+        }
+        return ""
     }
     
 
